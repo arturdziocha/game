@@ -3,3 +3,11 @@
 /.gradle/
 /.project
 /.settings/
+/.idea/compiler.xml
+/.idea/gradle.xml
+/.idea/jarRepositories.xml
+/.idea/misc.xml
+/.idea/vcs.xml
+/.idea/workspace.xml
+/.idea/.gitignore
+/gradle/wrapper/
