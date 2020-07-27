@@ -14,7 +14,8 @@ enum PointError implements Error {
     CANNOT_FIND_POINT("Cannot find point in database"),
     PERSISTENCE_FAILED("Persistence failed"),
     CANNOT_FIND_ALL_POINTS("Cannot find all points"),
-    DATA_CANNOT_BE_NULL("Data cannot be null");
+    DATA_CANNOT_BE_NULL("Data cannot be null"),
+    CANNOT_CREATE_POINTS("Points cannot be crated");
 
     private final String cause;
 

@@ -40,6 +40,6 @@ class PlayerTypeFinder {
     }
 
     final List<PlayerTypeOutputData> findAll() {
-        return Arrays.stream((PlayerType.values())).map(mapper::mapToOutputData).collect(Collectors.toList());
+        return Arrays.stream(PlayerType.values()).map(mapper::mapToOutputData).collect(Collectors.toList());
     }
 }

@@ -65,7 +65,6 @@ final class PointCreator {
     }
 
     final Either<Error, CreateOutputData> create(PointCreateRowColInputData inputData) {
-
         Option<Error> validationCheck = validator.validateRowCol(inputData);
         if (validationCheck.isDefined()) {
             return Either.left(validationCheck.get());
