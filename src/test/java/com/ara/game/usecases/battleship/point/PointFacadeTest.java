@@ -1,8 +1,6 @@
 package com.ara.game.usecases.battleship.point;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Arrays;
 import java.util.List;
@@ -40,19 +38,23 @@ class PointFacadeTest {
     @Test
     @DisplayName("Should return Either.left when inputData is null")
     void test1() {
+        // Given
         PointCreateStringInputData inputData = null;
+        // When
         Either<Error, CreateOutputData> point = pointFacade.create(inputData);
-        assertTrue(point.isLeft());
-        assertEquals("Data cannot be null", point.getLeft().getCause());
+        // Then
+        assertThat(point.getLeft().getCause()).isEqualTo("Data cannot be null");
     }
 
     @Test
     @DisplayName("Should return Either.left when pointString is null")
     void test2() {
+        // Given
         PointCreateStringInputData inputData = PointCreateStringInputData.builder().pointString(null).build();
+        // When
+        // Then
         Either<Error, CreateOutputData> point = pointFacade.create(inputData);
-        assertTrue(point.isLeft());
-        // assertEquals("Data cannot be null", point.getLeft().getCause());
+        assertThat(point.isLeft()).isTrue();
     }
 
     @Test
@@ -64,8 +66,7 @@ class PointFacadeTest {
         Either<Error, CreateOutputData> point = pointFacade.create(inputData);
 
         // Then
-        assertTrue(point.isLeft());
-        assertEquals("Point string cannot be empty", point.getLeft().getCause());
+        assertThat(point.getLeft().getCause()).isEqualTo("Point string cannot be empty");
     }
 
     @Test
@@ -78,9 +79,9 @@ class PointFacadeTest {
         Either<Error, CreateOutputData> pointId = pointFacade.create(inputData);
         Either<Error, PointOutputData> point = pointFacade.findById(pointId.get().getId());
         // Then
-        assertEquals("A2", point.get().getPointString());
-        assertEquals(1, point.get().getRow());
-        assertEquals(0, point.get().getColumn());
+        assertThat(point.get().getPointString()).isEqualTo("A2");
+        assertThat(point.get().getRow()).isEqualByComparingTo(1);
+        assertThat(point.get().getColumn()).isEqualByComparingTo(0);
     }
 
     @Test
@@ -93,26 +94,29 @@ class PointFacadeTest {
         Either<Error, CreateOutputData> point = pointFacade.create(inputData);
 
         // Then
-        assertTrue(point.isLeft());
-        assertEquals("Point string cannot be parsed", point.getLeft().getCause());
+        assertThat(point.getLeft().getCause()).isEqualTo("Point string cannot be parsed");
     }
 
     @Test
     @DisplayName("Should return Either.left When column is null")
     void test6() {
+        // Given
         PointCreateRowColInputData inputData = PointCreateRowColInputData.builder().row(1).column(null).build();
+        // When
         Either<Error, CreateOutputData> point = pointFacade.create(inputData);
-        assertTrue(point.isLeft());
-        assertEquals("Column cannot be null", point.getLeft().getCause());
+        // Then
+        assertThat(point.getLeft().getCause()).isEqualTo("Column cannot be null");
     }
 
     @Test
     @DisplayName("Should return Either.left When column is negative")
     void test7() {
+        // Given
         PointCreateRowColInputData inputData = PointCreateRowColInputData.builder().row(1).column(-1).build();
+        // When
         Either<Error, CreateOutputData> point = pointFacade.create(inputData);
-        assertTrue(point.isLeft());
-        assertEquals("Column cannot be negative", point.getLeft().getCause());
+        // Then
+        assertThat(point.getLeft().getCause()).isEqualTo("Column cannot be negative");
     }
 
     @Test
@@ -126,9 +130,9 @@ class PointFacadeTest {
         Either<Error, PointOutputData> point = pointFacade.findById(pointId.get().getId());
 
         // Then
-        assertEquals("C2", point.get().getPointString());
-        assertEquals(1, point.get().getRow());
-        assertEquals(2, point.get().getColumn());
+        assertThat(point.get().getPointString()).isEqualTo("C2");
+        assertThat(point.get().getRow()).isEqualByComparingTo(1);
+        assertThat(point.get().getColumn()).isEqualByComparingTo(2);
     }
 
     @Test
@@ -140,8 +144,7 @@ class PointFacadeTest {
         Either<Error, CreateOutputData> pointId = pointFacade.create(inputData);
 
         // Then
-        assertTrue(pointId.isLeft());
-        assertEquals("Wrong column specified", pointId.getLeft().getCause());
+        assertThat(pointId.getLeft().getCause()).isEqualTo("Wrong column specified");
     }
 
     @Test

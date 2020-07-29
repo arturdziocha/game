@@ -4,7 +4,9 @@ import com.ara.game.usecases.common.Error;
 
 public enum ShipError implements Error {
     DATA_CANNOT_BE_NULL("Data cannot be null"),
-    SHIP_CLASS_CANNOT_BE_EMPTY("Class of ship cannot be empty");
+    SHIP_CLASS_CANNOT_BE_EMPTY("Class of ship cannot be empty"),
+    SHIP_ID_CANNOT_BE_EMPTY("Ship id cannot be empty"),
+    SHIP_DOESNT_EXISTS("Ship doesn't exists");
     private final String cause;
 
     ShipError(final String cause) {

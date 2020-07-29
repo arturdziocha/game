@@ -7,7 +7,6 @@ import com.ara.game.usecases.battleship.shipclass.dto.ShipClassOutputData;
 import com.ara.game.usecases.common.CreateOutputData;
 import com.ara.game.usecases.common.Error;
 import com.ara.game.usecases.common.port.IdGenerator;
-import com.google.inject.Inject;
 
 import io.vavr.control.Either;
 import io.vavr.control.Option;
@@ -18,8 +17,7 @@ final class ShipCreator {
     private final ShipClassFacade shipClassFacade;
     private final Validator validator;
     private final ShipMapper mapper;
-
-    @Inject
+    
     ShipCreator(ShipGateway shipGateway, IdGenerator idGenerator) {
         this.shipGateway = shipGateway;
         this.idGenerator = idGenerator;
@@ -44,7 +42,7 @@ final class ShipCreator {
                 .shipClassShortName(inputData.getShipClassShortName())
                 .health(shipClass.get().getSize())
                 .build();
-        return 
+        return Either.right(mapper.mapToCreateOutputData(shipGateway.save(mapper.mapToOutputData(ship))));
 
     }
 }

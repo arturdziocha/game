@@ -29,7 +29,7 @@ public class PointInMemoryGateway implements PointGateway {
 
     @Override
     public Option<PointOutputData> findById(String id) {
-        return Option.of(entities.get(id)).map(mapper::mapToDTO);
+        return Option.of(entities.get(id)).map(mapper::mapToOutputData);
     }
 
     @Override
@@ -40,7 +40,7 @@ public class PointInMemoryGateway implements PointGateway {
                         .stream()
                         .filter(entity -> entity.getRow().equals(row) && entity.getColumn().equals(column))
                         .findFirst()
-                        .map(mapper::mapToDTO));
+                        .map(mapper::mapToOutputData));
     }
 
     @Override
@@ -51,7 +51,7 @@ public class PointInMemoryGateway implements PointGateway {
                         .stream()
                         .filter(entity -> pointString.equals(entity.getPointString()))
                         .findFirst()
-                        .map(mapper::mapToDTO));
+                        .map(mapper::mapToOutputData));
     }
 
     @Override
@@ -61,7 +61,7 @@ public class PointInMemoryGateway implements PointGateway {
             if (!entities.containsKey(id)) {
                 return Option.none();
             } else {
-                collection.add(mapper.mapToDTO(entities.get(id)));
+                collection.add(mapper.mapToOutputData(entities.get(id)));
             }
         }
         return Option.of(collection);

@@ -13,7 +13,7 @@ public class PointMapper {
                 .build();
     }
 
-    public PointOutputData mapToDTO(PointInMemory point) {
+    public PointOutputData mapToOutputData(PointInMemory point) {
         return PointOutputData
                 .builder()
                 .id(point.getId())
