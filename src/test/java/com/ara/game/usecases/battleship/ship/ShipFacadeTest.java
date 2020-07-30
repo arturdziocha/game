@@ -55,8 +55,7 @@ class ShipFacadeTest {
         //Then
         Either<Error, ShipOutputData> findShip = shipFacade.findById(ship.get().getId());
         assertThat(findShip.get().getHealth()).isEqualByComparingTo(3);
-        assertThat(component)
-        //TODO
+        assertThat(findShip.get().getShipClass().getName()).isEqualTo("Submarine");
     }
 
 }
