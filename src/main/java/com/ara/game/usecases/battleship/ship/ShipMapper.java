@@ -1,6 +1,7 @@
 package com.ara.game.usecases.battleship.ship;
 
-import com.ara.game.usecases.battleship.ship.dtos.ShipOutputData;
+import com.ara.game.usecases.battleship.ship.dto.ShipOutputData;
+import com.ara.game.usecases.battleship.shipclass.dto.ShipClassOutputData;
 import com.ara.game.usecases.common.CreateOutputData;
 
 final class ShipMapper {
@@ -8,11 +9,11 @@ final class ShipMapper {
         return CreateOutputData.builder().id(ship.getId()).build();
     }
 
-    final ShipOutputData mapToOutputData(Ship ship) {
+    final ShipOutputData mapToOutputData(Ship ship, ShipClassOutputData shipClass) {
         return ShipOutputData
                 .builder()
                 .id(ship.getId())
-                .shipClassShortName(ship.getShipClassShortName())
+                .shipClass(shipClass)
                 .health(ship.getHealth())
                 .build();
     }

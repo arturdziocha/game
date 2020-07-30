@@ -5,18 +5,22 @@ import java.util.Map;
 
 import com.ara.game.adapter.repository.battleship.inmemory.entity.point.ShipInMemory;
 import com.ara.game.adapter.repository.battleship.inmemory.entity.point.ShipMapper;
-import com.ara.game.usecases.battleship.ship.dtos.ShipOutputData;
+import com.ara.game.usecases.battleship.ship.dto.ShipOutputData;
 import com.ara.game.usecases.battleship.ship.port.ShipGateway;
+import com.ara.game.usecases.battleship.shipclass.ShipClassFacade;
 
 import io.vavr.control.Option;
 
 public class ShipInMemoryGateway implements ShipGateway {
     private Map<String, ShipInMemory> entities;
     private final ShipMapper mapper;
+    private final ShipClassFacade shipClassFacade;
 
     public ShipInMemoryGateway() {
         this.entities = new HashMap<>();
         this.mapper = new ShipMapper();
+        this.shipClassFacade = new ShipClassFacade();
+
     }
 
     @Override
@@ -27,7 +31,15 @@ public class ShipInMemoryGateway implements ShipGateway {
 
     @Override
     public Option<ShipOutputData> findById(String shipId) {
-        return Option.of(entities.get(shipId)).map(mapper::mapToOutputData);
+        Option<ShipInMemory> ship = Option.of(entities.get(shipId));
+        if (ship.isEmpty()) {
+            return Option.none();
+        }
+        return shipClassFacade
+                .findByShortName(ship.get().getShipClassShortName())
+                .map(s -> mapper.mapToOutputData(ship.get(), s))
+                .toOption();
+
     }
 
     @Override

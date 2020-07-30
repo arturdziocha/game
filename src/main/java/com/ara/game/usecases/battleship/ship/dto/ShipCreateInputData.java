@@ -1,4 +1,4 @@
-package com.ara.game.usecases.battleship.ship.dtos;
+package com.ara.game.usecases.battleship.ship.dto;
 
 import lombok.Builder;
 import lombok.Getter;

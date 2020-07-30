@@ -1,4 +1,6 @@
-package com.ara.game.usecases.battleship.ship.dtos;
+package com.ara.game.usecases.battleship.ship.dto;
+
+import com.ara.game.usecases.battleship.shipclass.dto.ShipClassOutputData;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -10,7 +12,7 @@ public final class ShipOutputData {
     @Getter
     private final String id;
     @Getter
-    private final String shipClassShortName;
+    private final ShipClassOutputData shipClass;
     @Getter
     private final Integer health;
 }

@@ -1,7 +1,7 @@
 package com.ara.game.usecases.battleship.ship;
 
-import com.ara.game.usecases.battleship.ship.dtos.ShipCreateInputData;
-import com.ara.game.usecases.battleship.ship.dtos.ShipOutputData;
+import com.ara.game.usecases.battleship.ship.dto.ShipCreateInputData;
+import com.ara.game.usecases.battleship.ship.dto.ShipOutputData;
 import com.ara.game.usecases.battleship.ship.port.ShipGateway;
 import com.ara.game.usecases.common.CreateOutputData;
 import com.ara.game.usecases.common.Error;

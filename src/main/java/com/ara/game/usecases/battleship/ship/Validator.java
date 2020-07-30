@@ -2,7 +2,7 @@ package com.ara.game.usecases.battleship.ship;
 
 import org.apache.commons.lang3.StringUtils;
 
-import com.ara.game.usecases.battleship.ship.dtos.ShipCreateInputData;
+import com.ara.game.usecases.battleship.ship.dto.ShipCreateInputData;
 import com.ara.game.usecases.common.Error;
 import io.vavr.control.Option;
 
