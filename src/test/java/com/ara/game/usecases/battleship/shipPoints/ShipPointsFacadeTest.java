@@ -7,6 +7,6 @@ class ShipPointsFacadeTest {
     @BeforeEach
     void setUp() throws Exception {}
 
-    //TODO
+    //TODO make a tests
 
 }
