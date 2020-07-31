@@ -25,4 +25,5 @@ final class ShipPointsCreator {
         }
         return Either.left(validated.get());
     }
+    //TODO create from random point
 }
