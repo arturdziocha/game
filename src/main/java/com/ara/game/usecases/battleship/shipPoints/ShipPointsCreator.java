@@ -17,7 +17,7 @@ final class ShipPointsCreator {
     }
 
     Either<Error, ShipPointsCreateInputData> createPoints(ShipPointsCreateInputData shipPoints) {
-        Option<Error> validated = validator.validateAll(shipPoints);
+        Option<Error> validated = validator.validateAll(shipPoints);       
 
         if (validated.isEmpty()) {
             ShipPointsCreateInputData dto = shipPointsGateway.saveAll(shipPoints);
