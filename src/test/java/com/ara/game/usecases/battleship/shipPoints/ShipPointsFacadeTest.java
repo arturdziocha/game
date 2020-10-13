@@ -1,12 +1,5 @@
 package com.ara.game.usecases.battleship.shipPoints;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-
 import com.ara.game.external.ConsoleModule;
 import com.ara.game.usecases.battleship.point.PointFacade;
 import com.ara.game.usecases.battleship.point.dto.PointCreateRowColInputData;
@@ -21,8 +14,15 @@ import com.ara.game.usecases.common.CreateOutputData;
 import com.ara.game.usecases.common.Error;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
-
 import io.vavr.control.Either;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 class ShipPointsFacadeTest {
 
@@ -56,14 +56,20 @@ class ShipPointsFacadeTest {
                         .directionShortName("d")
                         .build());
         // When
+        List<String> pointIds = points.get().stream().map(CreateOutputData::getId).collect(Collectors.toList());
         shipPointsFacade
                 .placePoints(ShipPointsCreateInputData
                         .builder()
-                        .points(points.get().stream().map(w -> w.getId()).collect(Collectors.toList()))
+                        .points(pointIds)
                         .shipId(ship.get().getId())
                         .build());
-        
+
         // Then
+        Either<Error, ShipPointsOutputData> pointsOutputData = shipPointsFacade.findPoints(s.get().getId());
+        List<String> shipPointsIds =
+                pointsOutputData.get().getShipPoints().stream().map(PointOutputData::getId).collect(Collectors.toList());
+        assertThat(pointIds).containsAll(shipPointsIds);
+
         //TODO End the test
     }
 
