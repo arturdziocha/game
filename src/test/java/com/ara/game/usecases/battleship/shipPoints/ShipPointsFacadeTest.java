@@ -33,8 +33,9 @@ class ShipPointsFacadeTest {
     @BeforeEach
     void setUp() {
         Injector injector = Guice.createInjector(new ConsoleModule());
-        pointFacade = injector.getInstance(PointFacade.class);
         shipPointsFacade = injector.getInstance(ShipPointsFacade.class);
+        pointFacade = injector.getInstance(PointFacade.class);
+
         shipFacade = injector.getInstance(ShipFacade.class);
     }
 
@@ -65,7 +66,8 @@ class ShipPointsFacadeTest {
                         .build());
 
         // Then
-        Either<Error, ShipPointsOutputData> pointsOutputData = shipPointsFacade.findPoints(s.get().getId());
+        Either<Error, ShipPointsOutputData> pointsOutputData = shipPointsFacade.findPoints(ship.get().getId());
+        System.out.println(pointsOutputData);
         List<String> shipPointsIds =
                 pointsOutputData.get().getShipPoints().stream().map(PointOutputData::getId).collect(Collectors.toList());
         assertThat(pointIds).containsAll(shipPointsIds);

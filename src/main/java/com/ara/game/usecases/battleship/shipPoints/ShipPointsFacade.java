@@ -4,19 +4,22 @@ import com.ara.game.usecases.battleship.shipPoints.dto.ShipPointsCreateInputData
 import com.ara.game.usecases.battleship.shipPoints.dto.ShipPointsOutputData;
 import com.ara.game.usecases.battleship.shipPoints.port.ShipPointsGateway;
 import com.ara.game.usecases.common.Error;
-
 import io.vavr.control.Either;
+
+import javax.inject.Inject;
 
 public final class ShipPointsFacade {
     private final ShipPointsCreator creator;
     private final ShipPointsFinder finder;
     private final ShipPointsRemover remover;
 
+    @Inject
     public ShipPointsFacade(ShipPointsGateway shipPointsGateway) {
         this.creator = new ShipPointsCreator(shipPointsGateway);
         this.finder = new ShipPointsFinder(shipPointsGateway);
         this.remover = new ShipPointsRemover(shipPointsGateway);
     }
+
     public Either<Error, ShipPointsCreateInputData> placePoints(ShipPointsCreateInputData shipPoints) {
         return creator.createPoints(shipPoints);
     }
