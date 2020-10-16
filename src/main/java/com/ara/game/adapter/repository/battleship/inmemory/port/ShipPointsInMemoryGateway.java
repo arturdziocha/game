@@ -28,11 +28,13 @@ public class ShipPointsInMemoryGateway implements ShipPointsGateway {
     @Override
     public ShipPointsCreateInputData saveAll(ShipPointsCreateInputData shipPoints) {
         entities.put(shipPoints.getShipId(), shipPoints.getPoints());
+        System.out.println(entities);
         return shipPoints;
     }
 
     @Override
     public Option<ShipPointsOutputData> findByShipId(String shipId) {
+        System.out.println(entities.get(shipId));
         return Option
                 .of(entities.get(shipId))
                 .flatMap(s -> pointGateway.findAllById(s).map(w -> mapper.mapToOutputData(shipId, w)));

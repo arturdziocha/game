@@ -66,6 +66,7 @@ class ShipPointsFacadeTest {
                         .build());
 
         // Then
+        System.out.println(ship.get().getId());
         Either<Error, ShipPointsOutputData> pointsOutputData = shipPointsFacade.findPoints(ship.get().getId());
         System.out.println(pointsOutputData);
         List<String> shipPointsIds =
