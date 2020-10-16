@@ -12,3 +12,4 @@
 /.idea/.gitignore
 /gradle/wrapper/
 /build/
+/target/
