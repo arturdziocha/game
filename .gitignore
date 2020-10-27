@@ -13,3 +13,6 @@
 /gradle/wrapper/
 /build/
 /target/
+/.idea/
+/.factorypath
+/workspace.code-workspace

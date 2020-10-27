@@ -8,7 +8,6 @@ import org.junit.jupiter.api.Test;
 
 import com.ara.game.usecases.battleship.shipclass.dto.ShipClassOutputData;
 import com.ara.game.usecases.common.Error;
-
 import io.vavr.control.Either;
 
 class ShipClassFacadeTest {

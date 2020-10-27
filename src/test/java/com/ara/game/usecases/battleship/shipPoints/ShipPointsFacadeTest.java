@@ -72,8 +72,6 @@ class ShipPointsFacadeTest {
                 .map(PointOutputData::getId)
                 .collect(Collectors.toList());
         assertThat(pointIds).containsAll(shipPointsIds);
-
-        // TODO End the test
     }
 
 }
