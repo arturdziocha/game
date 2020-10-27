@@ -23,7 +23,7 @@ public class PointInMemoryGateway implements PointGateway {
 
     @Override
     public PointOutputData save(PointOutputData point) {
-        entities.put(point.getId(), mapper.mapToEntity(point));
+        entities.put(point.getId(), mapper.mapToEntity(point));        
         return point;
     }
 
@@ -55,16 +55,15 @@ public class PointInMemoryGateway implements PointGateway {
     }
 
     @Override
-    public Option<List<PointOutputData>> findAllById(List<String> points) {
-        List<PointOutputData> collection = new ArrayList<>();
-        for (String id : points) {
+    public Option<List<PointOutputData>> findAllById(List<String> points) {        
+        List<PointOutputData> collection = new ArrayList<>();        
+        for (String id : points) {            
             if (!entities.containsKey(id)) {
                 return Option.none();
-            } else {
+            } else {                
                 collection.add(mapper.mapToOutputData(entities.get(id)));
             }
         }
         return Option.of(collection);
-    }
-
+    }   
 }
