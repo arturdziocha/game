@@ -5,8 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.ara.game.adapter.repository.battleship.inmemory.entity.point.PointInMemory;
-import com.ara.game.adapter.repository.battleship.inmemory.entity.point.PointMapper;
+import com.ara.game.adapter.repository.battleship.inmemory.entity.PointInMemory;
+import com.ara.game.adapter.repository.battleship.inmemory.entity.PointMapper;
 import com.ara.game.usecases.battleship.point.dto.PointOutputData;
 import com.ara.game.usecases.battleship.point.port.PointGateway;
 

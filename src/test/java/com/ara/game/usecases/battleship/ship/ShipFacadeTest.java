@@ -20,7 +20,7 @@ class ShipFacadeTest {
     private ShipFacade shipFacade;
 
     @BeforeEach
-    void setUp() {
+    void before() {
         Injector injector = Guice.createInjector(new ConsoleModule());
         shipFacade = injector.getInstance(ShipFacade.class);
     }

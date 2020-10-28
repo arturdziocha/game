@@ -1,4 +1,4 @@
-package com.ara.game.adapter.repository.battleship.inmemory.entity.point;
+package com.ara.game.adapter.repository.battleship.inmemory.entity;
 
 import com.ara.game.usecases.battleship.ship.dto.ShipOutputData;
 import com.ara.game.usecases.battleship.shipclass.dto.ShipClassOutputData;

@@ -1,4 +1,4 @@
-package com.ara.game.adapter.repository.battleship.inmemory.entity.point;
+package com.ara.game.adapter.repository.battleship.inmemory.entity;
 
 import com.ara.game.adapter.repository.battleship.inmemory.EntityInMemory;
 

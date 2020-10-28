@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.ara.game.adapter.repository.battleship.inmemory.entity.point.ShipPointsMapper;
+import com.ara.game.adapter.repository.battleship.inmemory.entity.ShipPointsMapper;
 import com.ara.game.usecases.battleship.point.port.PointGateway;
 import com.ara.game.usecases.battleship.shipPoints.dto.ShipPointsCreateInputData;
 import com.ara.game.usecases.battleship.shipPoints.dto.ShipPointsOutputData;

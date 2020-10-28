@@ -3,8 +3,8 @@ package com.ara.game.adapter.repository.battleship.inmemory.port;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.ara.game.adapter.repository.battleship.inmemory.entity.point.ShipInMemory;
-import com.ara.game.adapter.repository.battleship.inmemory.entity.point.ShipMapper;
+import com.ara.game.adapter.repository.battleship.inmemory.entity.ShipInMemory;
+import com.ara.game.adapter.repository.battleship.inmemory.entity.ShipMapper;
 import com.ara.game.usecases.battleship.ship.dto.ShipOutputData;
 import com.ara.game.usecases.battleship.ship.port.ShipGateway;
 import com.ara.game.usecases.battleship.shipclass.ShipClassFacade;
