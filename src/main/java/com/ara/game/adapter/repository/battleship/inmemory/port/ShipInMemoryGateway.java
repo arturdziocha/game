@@ -15,6 +15,7 @@ public class ShipInMemoryGateway implements ShipGateway {
     private Map<String, ShipInMemory> entities;
     private final ShipMapper mapper;
     private final ShipClassFacade shipClassFacade;
+    private final 
 
     public ShipInMemoryGateway() {
         this.entities = new HashMap<>();

@@ -1,9 +1,20 @@
 package com.ara.game.usecases.battleship.playerShip;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
+import com.ara.game.usecases.battleship.player.dtos.PlayerOutputData;
 import com.ara.game.usecases.battleship.player.port.PlayerGateway;
+import com.ara.game.usecases.battleship.playerShip.dto.PlayerShipInputData;
 import com.ara.game.usecases.battleship.playerShip.port.PlayerShipGateway;
+import com.ara.game.usecases.battleship.ship.dto.ShipOutputData;
 import com.ara.game.usecases.battleship.ship.port.ShipGateway;
 import com.ara.game.usecases.battleship.shipclass.ShipClassFacade;
+import com.ara.game.usecases.battleship.shipclass.dto.ShipClassOutputData;
+import com.ara.game.usecases.common.Error;
+
+import io.vavr.control.Either;
+import io.vavr.control.Option;
 
 final class PlayerShipCreator {
     private final PlayerShipGateway playerShipGateway;
@@ -21,5 +32,65 @@ final class PlayerShipCreator {
         this.shipClassFacade = shipClassFacade;
         this.validator = new PlayerShipValidator();
         this.mapper = new PlayerShipMapper();
+    }
+
+    final Either<Error, ShipOutputData> placeShip(PlayerShipInputData inputData) {
+        Option<Error> validated = validator.validate(inputData);
+        if (validated.isDefined()) {
+            return Either.left(validated.get());
+        }
+        if (isAllShipsPlaced(inputData.getPlayerId())) {
+            removeShip(inputData.getShipId());
+            return Either.left(PlayerShipError.ALL_SHIP_PLACED);
+        }
+        Option<PlayerOutputData> player = playerGateway.findById(inputData.getPlayerId());
+        if (player.isEmpty()) {
+            removeShip(inputData.getShipId());
+            return Either.left(PlayerShipError.CANNOT_FIND_RELATED_PLAYER);
+        }
+        Option<ShipOutputData> ship = shipGateway.findById(inputData.getShipId());
+        if (ship.isEmpty()) {
+            removeShip(inputData.getShipId());
+            return Either.left(PlayerShipError.CANNOT_FIND_RELATED_SHIP);
+        }
+        if (isAlreadyPlaced(inputData.getPlayerId(), ship.get().getShipClass().getShortName()).isDefined()) {
+            return Either.left(PlayerShipError.SHIP_IS_ALREADY_PLACED);
+        }
+        Option<List<ShipOutputData>> placedShips = playerShipGateway.find(player.get().getId());
+        if (placedShips.isDefined()) {
+            if (isToCloseTo(placedShips.get(), ship.get().getPoints())) {
+                removeShip(inputData.getShipId());
+                return Either.left(PlayerShipError.SHIP_IS_TO_CLOSE_OTHER);
+            }
+        }
+    }
+
+    
+
+    private boolean isAllShipsPlaced(String playerId) {
+        Option<List<ShipOutputData>> alreadyPlaced = playerShipGateway.find(playerId);
+        if (alreadyPlaced.isEmpty()) {
+            return false;
+        }
+        List<String> alreadyPlacedShortNames = alreadyPlaced
+                .get()
+                .stream()
+                .map(ship -> ship.getShipClass().getShortName())
+                .sorted((a, b) -> a.compareTo(b))
+                .collect(Collectors.toList());
+        List<String> shipClasses = shipClassFacade
+                .findAll()
+                .stream()
+                .map(ShipClassOutputData::getShortName)
+                .sorted((a, b) -> a.compareTo(b))
+                .collect(Collectors.toList());
+        return alreadyPlacedShortNames.containsAll(shipClasses);
+
+    }
+    private void removeShip(String shipId) {
+        shipGateway.remove(shipId);
+    }
+    private Option<ShipOutputData> isAlreadyPlaced(String playerId, String shipClassShortName) {
+        return playerShipGateway.findByPlayerIdAndShipClassShortName(playerId, shipClassShortName);
     }
 }
