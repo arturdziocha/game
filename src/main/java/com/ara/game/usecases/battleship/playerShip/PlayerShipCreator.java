@@ -7,6 +7,7 @@ import com.ara.game.usecases.battleship.player.dtos.PlayerOutputData;
 import com.ara.game.usecases.battleship.player.port.PlayerGateway;
 import com.ara.game.usecases.battleship.playerShip.dto.PlayerShipInputData;
 import com.ara.game.usecases.battleship.playerShip.port.PlayerShipGateway;
+import com.ara.game.usecases.battleship.point.dto.PointOutputData;
 import com.ara.game.usecases.battleship.ship.dto.ShipOutputData;
 import com.ara.game.usecases.battleship.ship.dto.ShipWithPointsOutputData;
 import com.ara.game.usecases.battleship.ship.port.ShipGateway;
@@ -35,7 +36,7 @@ final class PlayerShipCreator {
         this.mapper = new PlayerShipMapper();
     }
 
-    final Either<Error, ShipOutputData> placeShip(PlayerShipInputData inputData) {
+    final Either<Error, ShipWithPointsOutputData> placeShip(PlayerShipInputData inputData) {
         Option<Error> validated = validator.validate(inputData);
         if (validated.isDefined()) {
             return Either.left(validated.get());
@@ -57,17 +58,21 @@ final class PlayerShipCreator {
         if (isAlreadyPlaced(inputData.getPlayerId(), ship.get().getShipClass().getShortName()).isDefined()) {
             return Either.left(PlayerShipError.SHIP_IS_ALREADY_PLACED);
         }
-        Option<List<ShipOutputData>> placedShips = playerShipGateway.find(player.get().getId());
-//        if (placedShips.isDefined()) {
-//            if (isToCloseTo(placedShips.get(), ship.get().getPoints())) {
-//                removeShip(inputData.getShipId());
-//                return Either.left(PlayerShipError.SHIP_IS_TO_CLOSE_OTHER);
-//            }
-//        }
-        return null;
+        Option<List<ShipWithPointsOutputData>> placedShips = playerShipGateway.findWithPoints(player.get().getId());
+        if (placedShips.isDefined()) {
+            if (isToCloseTo(placedShips.get(), ship.get().getPoints())) {
+                removeShip(inputData.getShipId());
+                return Either.left(PlayerShipError.SHIP_IS_TO_CLOSE_OTHER);
+            }
+        }
+        PlayerShip playerShip = PlayerShip
+                .builder()
+                .playerId(inputData.getPlayerId())
+                .shipId(inputData.getShipId())
+                .build();
+        playerShipGateway.save(mapper.mapToDTO(playerShip));
+        return ship.toEither(PlayerShipError.PLAYER_SHIP_NOT_FOUND);
     }
-
-    
 
     private boolean isAllShipsPlaced(String playerId) {
         Option<List<ShipOutputData>> alreadyPlaced = playerShipGateway.find(playerId);
@@ -89,10 +94,32 @@ final class PlayerShipCreator {
         return alreadyPlacedShortNames.containsAll(shipClasses);
 
     }
+
     private void removeShip(String shipId) {
         shipGateway.remove(shipId);
     }
+
     private Option<ShipOutputData> isAlreadyPlaced(String playerId, String shipClassShortName) {
         return playerShipGateway.findByPlayerIdAndShipClassShortName(playerId, shipClassShortName);
+    }
+
+    private boolean isToCloseTo(List<ShipWithPointsOutputData> placedShips, List<PointOutputData> shipPoints) {
+        List<PointOutputData> placed = placedShips
+                .stream()
+                .flatMap(s -> s.getPoints().stream())
+                .collect(Collectors.toList());
+        for (PointOutputData point : placed) {
+            for (PointOutputData shipPoint : shipPoints) {
+                if (isNeighbor(point, shipPoint)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    private boolean isNeighbor(PointOutputData point, PointOutputData other) {
+        return (Math.abs(point.getRow() - other.getRow()) <= 1)
+                && (Math.abs(point.getColumn() - other.getColumn()) <= 1);
     }
 }

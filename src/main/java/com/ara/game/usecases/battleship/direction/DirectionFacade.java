@@ -1,10 +1,9 @@
 package com.ara.game.usecases.battleship.direction;
 
-import java.util.List;
-
 import com.ara.game.usecases.battleship.direction.dto.DirectionOutputData;
 import com.ara.game.usecases.common.Error;
 
+import io.vavr.collection.Seq;
 import io.vavr.control.Either;
 
 public final class DirectionFacade {
@@ -23,7 +22,7 @@ public final class DirectionFacade {
         return finder.findByShortName(shortName);
     }
 
-    public final List<DirectionOutputData> findAll() {
+    public final Seq<DirectionOutputData> findAll() {
         return finder.findAll();
     }
 

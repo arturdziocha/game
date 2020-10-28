@@ -1,15 +1,13 @@
 package com.ara.game.usecases.battleship.direction;
 
-import java.util.Arrays;
-import java.util.List;
 import java.util.Random;
-import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.StringUtils;
 
 import com.ara.game.usecases.battleship.direction.dto.DirectionOutputData;
 import com.ara.game.usecases.common.Error;
 
+import io.vavr.collection.Seq;
 import io.vavr.collection.Stream;
 import io.vavr.control.Either;
 
@@ -42,12 +40,12 @@ final class DirectionFinder {
                 .toEither(DirectionError.CANNOT_FIND_DIRECTION);
     }
 
-    final List<DirectionOutputData> findAll() {
-        return Arrays.stream(Direction.values()).map(mapper::mapToOutputData).collect(Collectors.toList());
+    final Seq<DirectionOutputData> findAll() {
+        return Stream.of(Direction.values()).map(mapper::mapToOutputData);
     }
 
     final DirectionOutputData findRandom() {
-        List<DirectionOutputData> all = findAll();
+        Seq<DirectionOutputData> all = findAll();
         return all.get(new Random().nextInt(all.size()));
     }
 

@@ -2,8 +2,6 @@ package com.ara.game.usecases.battleship.direction;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import java.util.List;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -11,6 +9,7 @@ import org.junit.jupiter.api.Test;
 import com.ara.game.usecases.battleship.direction.dto.DirectionOutputData;
 import com.ara.game.usecases.common.Error;
 
+import io.vavr.collection.Seq;
 import io.vavr.control.Either;
 
 class DirectionFacadeTest {
@@ -79,7 +78,7 @@ class DirectionFacadeTest {
     @DisplayName("Get all directions")
     void test7() {
         // Given When
-        List<DirectionOutputData> directions = directionFacade.findAll();
+        Seq<DirectionOutputData> directions = directionFacade.findAll();
         // Then
         assertThat(directions.size()).isEqualByComparingTo(4);
     }

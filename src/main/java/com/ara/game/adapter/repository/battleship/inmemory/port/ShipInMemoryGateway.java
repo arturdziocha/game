@@ -8,6 +8,7 @@ import com.ara.game.adapter.repository.battleship.inmemory.entity.ShipMapper;
 import com.ara.game.usecases.battleship.ship.dto.ShipOutputData;
 import com.ara.game.usecases.battleship.ship.dto.ShipWithPointsOutputData;
 import com.ara.game.usecases.battleship.ship.port.ShipGateway;
+import com.ara.game.usecases.battleship.shipPoints.dto.ShipPointsOutputData;
 import com.ara.game.usecases.battleship.shipPoints.port.ShipPointsGateway;
 import com.ara.game.usecases.battleship.shipclass.ShipClassFacade;
 import com.google.inject.Inject;
@@ -19,6 +20,7 @@ public class ShipInMemoryGateway implements ShipGateway {
     private final ShipMapper mapper;
     private final ShipClassFacade shipClassFacade;
     private final ShipPointsGateway shipPointsGateway;
+
     @Inject
     public ShipInMemoryGateway(ShipPointsGateway shipPointsGateway) {
         this.entities = new HashMap<>();
@@ -55,11 +57,12 @@ public class ShipInMemoryGateway implements ShipGateway {
 
     @Override
     public Option<ShipWithPointsOutputData> findByIdWithPoints(String shipId) {
-        Option<ShipInMemory> ship = Option.of(entities.get(shipId));
+        Option<ShipOutputData> ship = findById(shipId);
         if (ship.isEmpty()) {
             return Option.none();
         }
-        return null;
+        Option<ShipPointsOutputData> points = shipPointsGateway.findByShipId(shipId);
+        return points.map(p -> mapper.mapToOutputDataWithPoints(ship.get(), p)).toOption();
     }
 
 }

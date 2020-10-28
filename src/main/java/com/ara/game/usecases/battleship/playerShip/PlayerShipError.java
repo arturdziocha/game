@@ -9,7 +9,9 @@ public enum PlayerShipError implements Error {
     ALL_SHIP_PLACED("All ships already placed"),
     CANNOT_FIND_RELATED_PLAYER("Cannot find related player"),
     CANNOT_FIND_RELATED_SHIP("Cannot find related ship"),
-    SHIP_IS_ALREADY_PLACED("Ship is already placed");
+    SHIP_IS_ALREADY_PLACED("Ship is already placed"),
+    SHIP_IS_TO_CLOSE_OTHER("Ship is to close other ship"),
+    PLAYER_SHIP_NOT_FOUND("Player ship not found");
     private final String cause;
 
     PlayerShipError(final String cause) {
