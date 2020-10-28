@@ -2,6 +2,7 @@ package com.ara.game.usecases.battleship.player;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -21,7 +22,7 @@ class PlayerFacadeTest {
     private PlayerFacade playerFacade;
     private PlayerTypeFacade playerTypeFacade;
 
-    @Test
+    @BeforeEach
     void before() {
         Injector injector = Guice.createInjector(new ConsoleModule());
         playerFacade = injector.getInstance(PlayerFacade.class);
@@ -36,7 +37,6 @@ class PlayerFacadeTest {
         // When
         Either<Error, CreateOutputData> player = playerFacade.create(input);
         // Then
-        System.out.println(player);
         assertThat(player.getLeft().getCause()).isEqualTo("Data cannot be empty");
     }
 

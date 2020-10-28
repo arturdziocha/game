@@ -27,7 +27,7 @@ final class PlayerCreator {
         this.mapper = new PlayerMapper();
     }
 
-    final Either<Error, CreateOutputData> create(PlayerCreateInputData inputData) {
+    final Either<Error, CreateOutputData> create(PlayerCreateInputData inputData) {        
         Option<Error> validated = validator.validate(inputData);
         if (validated.isDefined()) {
             return Either.left(validated.get());
