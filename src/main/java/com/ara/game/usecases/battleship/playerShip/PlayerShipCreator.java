@@ -8,6 +8,7 @@ import com.ara.game.usecases.battleship.player.port.PlayerGateway;
 import com.ara.game.usecases.battleship.playerShip.dto.PlayerShipInputData;
 import com.ara.game.usecases.battleship.playerShip.port.PlayerShipGateway;
 import com.ara.game.usecases.battleship.ship.dto.ShipOutputData;
+import com.ara.game.usecases.battleship.ship.dto.ShipWithPointsOutputData;
 import com.ara.game.usecases.battleship.ship.port.ShipGateway;
 import com.ara.game.usecases.battleship.shipclass.ShipClassFacade;
 import com.ara.game.usecases.battleship.shipclass.dto.ShipClassOutputData;
@@ -48,7 +49,7 @@ final class PlayerShipCreator {
             removeShip(inputData.getShipId());
             return Either.left(PlayerShipError.CANNOT_FIND_RELATED_PLAYER);
         }
-        Option<ShipOutputData> ship = shipGateway.findById(inputData.getShipId());
+        Option<ShipWithPointsOutputData> ship = shipGateway.findByIdWithPoints(inputData.getShipId());
         if (ship.isEmpty()) {
             removeShip(inputData.getShipId());
             return Either.left(PlayerShipError.CANNOT_FIND_RELATED_SHIP);
@@ -57,12 +58,13 @@ final class PlayerShipCreator {
             return Either.left(PlayerShipError.SHIP_IS_ALREADY_PLACED);
         }
         Option<List<ShipOutputData>> placedShips = playerShipGateway.find(player.get().getId());
-        if (placedShips.isDefined()) {
-            if (isToCloseTo(placedShips.get(), ship.get().getPoints())) {
-                removeShip(inputData.getShipId());
-                return Either.left(PlayerShipError.SHIP_IS_TO_CLOSE_OTHER);
-            }
-        }
+//        if (placedShips.isDefined()) {
+//            if (isToCloseTo(placedShips.get(), ship.get().getPoints())) {
+//                removeShip(inputData.getShipId());
+//                return Either.left(PlayerShipError.SHIP_IS_TO_CLOSE_OTHER);
+//            }
+//        }
+        return null;
     }
 
     

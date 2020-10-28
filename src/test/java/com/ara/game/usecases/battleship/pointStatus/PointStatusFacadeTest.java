@@ -26,7 +26,7 @@ class PointStatusFacadeTest {
         // Given when
         Either<Error, PointStatusOutputData> pointStatus = pointStatusFacade.findByName(null);
         // Then
-        assertThat(pointStatus.getLeft()).isEqualTo("Name cannot be empty");
+        assertThat(pointStatus.getLeft().getCause()).isEqualTo("Name cannot be empty");
     }
 
     @Test
@@ -35,7 +35,7 @@ class PointStatusFacadeTest {
         // Given when
         Either<Error, PointStatusOutputData> pointStatus = pointStatusFacade.findByName("");
         // Then
-        assertThat(pointStatus.getLeft()).isEqualTo("Name cannot be empty");
+        assertThat(pointStatus.getLeft().getCause()).isEqualTo("Name cannot be empty");
     }
 
     @Test
