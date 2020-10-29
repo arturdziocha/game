@@ -1,9 +1,8 @@
 package com.ara.game.usecases.battleship.point.port;
 
-import java.util.List;
-
 import com.ara.game.usecases.battleship.point.dto.PointOutputData;
 
+import io.vavr.collection.Seq;
 import io.vavr.control.Option;
 
 public interface PointGateway {
@@ -15,6 +14,6 @@ public interface PointGateway {
 
     Option<PointOutputData> findByPointString(String pointString);
 
-    Option<List<PointOutputData>> findAllById(List<String> points);
+    Option<Seq<PointOutputData>> findAllById(Seq<String> points);
 
 }

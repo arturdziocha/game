@@ -1,12 +1,11 @@
 package com.ara.game.adapter.repository.battleship.inmemory.port;
 
-import java.util.List;
-
 import com.ara.game.usecases.battleship.playerShip.dto.PlayerShipInputData;
 import com.ara.game.usecases.battleship.playerShip.port.PlayerShipGateway;
 import com.ara.game.usecases.battleship.ship.dto.ShipOutputData;
 import com.ara.game.usecases.battleship.ship.dto.ShipWithPointsOutputData;
 
+import io.vavr.collection.Seq;
 import io.vavr.control.Option;
 
 public class PlayerShipInMemoryGateway implements PlayerShipGateway {
@@ -18,13 +17,13 @@ public class PlayerShipInMemoryGateway implements PlayerShipGateway {
     }
 
     @Override
-    public Option<List<ShipOutputData>> find(String playerId) {
+    public Option<Seq<ShipOutputData>> find(String playerId) {
         // TODO Auto-generated method stub
         return null;
     }
 
     @Override
-    public Option<List<ShipWithPointsOutputData>> findWithPoints(String playerId) {
+    public Option<Seq<ShipWithPointsOutputData>> findWithPoints(String playerId) {
         // TODO Auto-generated method stub
         return null;
     }

@@ -24,6 +24,7 @@ import com.ara.game.usecases.common.Error;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 
+import io.vavr.collection.Seq;
 import io.vavr.control.Either;
 
 class PointFacadeTest {
@@ -167,11 +168,10 @@ class PointFacadeTest {
                 .build();
 
         // When
-        Either<Error, List<CreateOutputData>> createdPoints = pointFacade.createPoints(spcid);
+        Either<Error, Seq<CreateOutputData>> createdPoints = pointFacade.createPoints(spcid);
 
         List<String> pointStrings = createdPoints
                 .get()
-                .stream()
                 .map(p -> pointFacade.findById(p.getId()))
                 .map(Either::get)
                 .map(pod -> pod.getPointString())

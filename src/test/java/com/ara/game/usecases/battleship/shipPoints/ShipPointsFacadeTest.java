@@ -2,9 +2,6 @@ package com.ara.game.usecases.battleship.shipPoints;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -24,6 +21,7 @@ import com.ara.game.usecases.common.Error;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 
+import io.vavr.collection.Seq;
 import io.vavr.control.Either;
 
 class ShipPointsFacadeTest {
@@ -51,7 +49,7 @@ class ShipPointsFacadeTest {
         Either<Error, CreateOutputData> startPoint = pointFacade
                 .create(PointCreateRowColInputData.builder().row(1).column(1).build());
         Either<Error, PointOutputData> p = pointFacade.findById(startPoint.get().getId());
-        Either<Error, List<CreateOutputData>> points = pointFacade
+        Either<Error, Seq<CreateOutputData>> points = pointFacade
                 .createPoints(PointsCreateInputData
                         .builder()
                         .point(p.get())
@@ -59,18 +57,16 @@ class ShipPointsFacadeTest {
                         .directionShortName("d")
                         .build());
         // When
-        List<String> pointIds = points.get().stream().map(CreateOutputData::getId).collect(Collectors.toList());
+        Seq<String> pointIds = points.get().map(CreateOutputData::getId);
         shipPointsFacade
                 .placePoints(ShipPointsCreateInputData.builder().points(pointIds).shipId(ship.get().getId()).build());
 
         // Then
         Either<Error, ShipPointsOutputData> pointsOutputData = shipPointsFacade.findPoints(ship.get().getId());
-        List<String> shipPointsIds = pointsOutputData
+        Seq<String> shipPointsIds = pointsOutputData
                 .get()
                 .getShipPoints()
-                .stream()
-                .map(PointOutputData::getId)
-                .collect(Collectors.toList());
+                .map(PointOutputData::getId);
         assertThat(pointIds).containsAll(shipPointsIds);
     }
 

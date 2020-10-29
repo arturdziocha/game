@@ -1,8 +1,5 @@
 package com.ara.game.usecases.battleship.playerShip;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 import com.ara.game.usecases.battleship.player.dtos.PlayerOutputData;
 import com.ara.game.usecases.battleship.player.port.PlayerGateway;
 import com.ara.game.usecases.battleship.playerShip.dto.PlayerShipInputData;
@@ -15,6 +12,7 @@ import com.ara.game.usecases.battleship.shipclass.ShipClassFacade;
 import com.ara.game.usecases.battleship.shipclass.dto.ShipClassOutputData;
 import com.ara.game.usecases.common.Error;
 
+import io.vavr.collection.Seq;
 import io.vavr.control.Either;
 import io.vavr.control.Option;
 
@@ -58,7 +56,7 @@ final class PlayerShipCreator {
         if (isAlreadyPlaced(inputData.getPlayerId(), ship.get().getShipClass().getShortName()).isDefined()) {
             return Either.left(PlayerShipError.SHIP_IS_ALREADY_PLACED);
         }
-        Option<List<ShipWithPointsOutputData>> placedShips = playerShipGateway.findWithPoints(player.get().getId());
+        Option<Seq<ShipWithPointsOutputData>> placedShips = playerShipGateway.findWithPoints(player.get().getId());
         if (placedShips.isDefined()) {
             if (isToCloseTo(placedShips.get(), ship.get().getPoints())) {
                 removeShip(inputData.getShipId());
@@ -75,22 +73,18 @@ final class PlayerShipCreator {
     }
 
     private boolean isAllShipsPlaced(String playerId) {
-        Option<List<ShipOutputData>> alreadyPlaced = playerShipGateway.find(playerId);
+        Option<Seq<ShipOutputData>> alreadyPlaced = playerShipGateway.find(playerId);
         if (alreadyPlaced.isEmpty()) {
             return false;
         }
-        List<String> alreadyPlacedShortNames = alreadyPlaced
+        Seq<String> alreadyPlacedShortNames = alreadyPlaced
                 .get()
-                .stream()
                 .map(ship -> ship.getShipClass().getShortName())
-                .sorted((a, b) -> a.compareTo(b))
-                .collect(Collectors.toList());
-        List<String> shipClasses = shipClassFacade
+                .sortBy(String::toString);
+        Seq<String> shipClasses = shipClassFacade
                 .findAll()
-                .stream()
                 .map(ShipClassOutputData::getShortName)
-                .sorted((a, b) -> a.compareTo(b))
-                .collect(Collectors.toList());
+                .sortBy(String::toString);
         return alreadyPlacedShortNames.containsAll(shipClasses);
 
     }
@@ -103,11 +97,8 @@ final class PlayerShipCreator {
         return playerShipGateway.findByPlayerIdAndShipClassShortName(playerId, shipClassShortName);
     }
 
-    private boolean isToCloseTo(List<ShipWithPointsOutputData> placedShips, List<PointOutputData> shipPoints) {
-        List<PointOutputData> placed = placedShips
-                .stream()
-                .flatMap(s -> s.getPoints().stream())
-                .collect(Collectors.toList());
+    private boolean isToCloseTo(Seq<ShipWithPointsOutputData> placedShips, Seq<PointOutputData> shipPoints) {
+        Seq<PointOutputData> placed = placedShips.flatMap(ShipWithPointsOutputData::getPoints);
         for (PointOutputData point : placed) {
             for (PointOutputData shipPoint : shipPoints) {
                 if (isNeighbor(point, shipPoint)) {

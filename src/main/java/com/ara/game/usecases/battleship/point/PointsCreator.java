@@ -1,14 +1,13 @@
 package com.ara.game.usecases.battleship.point;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.ara.game.usecases.battleship.point.dto.PointCreateRowColInputData;
 import com.ara.game.usecases.battleship.point.dto.PointOutputData;
 import com.ara.game.usecases.battleship.point.dto.PointsCreateInputData;
 import com.ara.game.usecases.common.CreateOutputData;
 import com.ara.game.usecases.common.Error;
 
+import io.vavr.collection.List;
+import io.vavr.collection.Seq;
 import io.vavr.control.Either;
 
 final class PointsCreator {
@@ -20,21 +19,21 @@ final class PointsCreator {
         this.creator = creator;
     }
 
-    final Either<Error, List<CreateOutputData>> create(PointsCreateInputData inputData) {
+    final Either<Error, Seq<CreateOutputData>> create(PointsCreateInputData inputData) {
         return fill(inputData);
     }
 
-    final Either<Error, List<CreateOutputData>> createRandom(PointsCreateInputData inputData) {
+    final Either<Error, Seq<CreateOutputData>> createRandom(PointsCreateInputData inputData) {
 
-        Either<Error, List<CreateOutputData>> chooser = fill(inputData);
+        Either<Error, Seq<CreateOutputData>> chooser = fill(inputData);
         while (chooser.isLeft()) {
             chooser = fill(inputData);
         }
         return chooser;
     }
 
-    private Either<Error, List<CreateOutputData>> fill(PointsCreateInputData pointsCreateInputData) {
-        List<CreateOutputData> points = new ArrayList<>();
+    private Either<Error, Seq<CreateOutputData>> fill(PointsCreateInputData pointsCreateInputData) {
+        Seq<CreateOutputData> points = List.empty();
         for (int i = 0; i < pointsCreateInputData.getSize(); i++) {
             int row = 0;
             int column = 0;
@@ -54,8 +53,8 @@ final class PointsCreator {
                 case "l":
                     row = pointsCreateInputData.getPoint().getRow();
                     column = pointsCreateInputData.getPoint().getColumn() - i;
-                    default:
-                        return Either.left(PointError.CANNOT_CREATE_POINTS);
+                default:
+                    return Either.left(PointError.CANNOT_CREATE_POINTS);
             }
             Either<Error, PointOutputData> findPoint = finder.findByRowAndColumn(row, column);
             Either<Error, CreateOutputData> created = findPoint
@@ -65,7 +64,7 @@ final class PointsCreator {
                 return Either.left(created.getLeft());
             }
 
-            points.add(created.get());
+            points = points.append(created.get());
         }
         return Either.right(points);
     }

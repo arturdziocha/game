@@ -1,7 +1,5 @@
 package com.ara.game.usecases.battleship.point;
 
-import java.util.List;
-
 import com.ara.game.usecases.battleship.point.dto.PointCreateRowColInputData;
 import com.ara.game.usecases.battleship.point.dto.PointCreateStringInputData;
 import com.ara.game.usecases.battleship.point.dto.PointOutputData;
@@ -12,6 +10,7 @@ import com.ara.game.usecases.common.Error;
 import com.ara.game.usecases.common.port.IdGenerator;
 import com.google.inject.Inject;
 
+import io.vavr.collection.Seq;
 import io.vavr.control.Either;
 
 public final class PointFacade {
@@ -35,11 +34,11 @@ public final class PointFacade {
         return pointCreator.create(inputData);
     }
 
-    public Either<Error, List<CreateOutputData>> createPoints(PointsCreateInputData inputData) {
+    public Either<Error, Seq<CreateOutputData>> createPoints(PointsCreateInputData inputData) {
         return pointsCreator.create(inputData);
     }
 
-    public Either<Error, List<CreateOutputData>> createRandomPoints(PointsCreateInputData inputData) {
+    public Either<Error, Seq<CreateOutputData>> createRandomPoints(PointsCreateInputData inputData) {
         return pointsCreator.createRandom(inputData);
     }
 

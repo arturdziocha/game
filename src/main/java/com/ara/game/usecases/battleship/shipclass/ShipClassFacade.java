@@ -1,10 +1,9 @@
 package com.ara.game.usecases.battleship.shipclass;
 
-import java.util.List;
-
 import com.ara.game.usecases.battleship.shipclass.dto.ShipClassOutputData;
 import com.ara.game.usecases.common.Error;
 
+import io.vavr.collection.Seq;
 import io.vavr.control.Either;
 
 public final class ShipClassFacade {
@@ -24,7 +23,7 @@ public final class ShipClassFacade {
         return finder.findByShortName(shortName);
     }
 
-    public List<ShipClassOutputData> findAll() {
+    public Seq<ShipClassOutputData> findAll() {
         return finder.findAll();
     }
 }

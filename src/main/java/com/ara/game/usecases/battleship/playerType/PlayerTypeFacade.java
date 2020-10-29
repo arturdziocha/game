@@ -1,10 +1,9 @@
 package com.ara.game.usecases.battleship.playerType;
 
-import java.util.List;
-
 import com.ara.game.usecases.battleship.playerType.dto.PlayerTypeOutputData;
 import com.ara.game.usecases.common.Error;
 
+import io.vavr.collection.Seq;
 import io.vavr.control.Either;
 
 public class PlayerTypeFacade {
@@ -23,7 +22,7 @@ public class PlayerTypeFacade {
         return finder.findByName(name);
     }
 
-    public final List<PlayerTypeOutputData> findAll() {
+    public final Seq<PlayerTypeOutputData> findAll() {
         return finder.findAll();
     }
 }

@@ -1,9 +1,8 @@
 package com.ara.game.usecases.battleship.shipPoints.dto;
 
-import java.util.List;
-
 import com.ara.game.usecases.battleship.point.dto.PointOutputData;
 
+import io.vavr.collection.Seq;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NonNull;
@@ -15,5 +14,5 @@ public final class ShipPointsOutputData {
     private final String shipId;
     @Getter
     @NonNull
-    private final List<PointOutputData> shipPoints;
+    private final Seq<PointOutputData> shipPoints;
 }

@@ -1,10 +1,9 @@
 package com.ara.game.usecases.battleship.ship.dto;
 
-import java.util.List;
-
 import com.ara.game.usecases.battleship.point.dto.PointOutputData;
 import com.ara.game.usecases.battleship.shipclass.dto.ShipClassOutputData;
 
+import io.vavr.collection.Seq;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -17,5 +16,5 @@ public final class ShipWithPointsOutputData {
     @Getter
     private final Integer health;
     @Getter
-    private final List<PointOutputData> points;
+    private final Seq<PointOutputData> points;
 }
