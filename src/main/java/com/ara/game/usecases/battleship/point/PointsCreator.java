@@ -1,7 +1,6 @@
 package com.ara.game.usecases.battleship.point;
 
 import com.ara.game.usecases.battleship.point.dto.PointCreateRowColInputData;
-import com.ara.game.usecases.battleship.point.dto.PointOutputData;
 import com.ara.game.usecases.battleship.point.dto.PointsCreateInputData;
 import com.ara.game.usecases.common.CreateOutputData;
 import com.ara.game.usecases.common.Error;
@@ -56,14 +55,13 @@ final class PointsCreator {
                 default:
                     return Either.left(PointError.CANNOT_CREATE_POINTS);
             }
-            Either<Error, PointOutputData> findPoint = finder.findByRowAndColumn(row, column);
-            Either<Error, CreateOutputData> created = findPoint
+            Either<Error, CreateOutputData> created = finder
+                    .findByRowAndColumn(row, column)
                     .map(p -> CreateOutputData.builder().id(p.getId()).build())
                     .orElse(create(row, column));
             if (created.isLeft()) {
                 return Either.left(created.getLeft());
             }
-
             points = points.append(created.get());
         }
         return Either.right(points);

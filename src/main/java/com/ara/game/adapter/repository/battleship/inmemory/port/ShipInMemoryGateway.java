@@ -13,6 +13,8 @@ import com.ara.game.usecases.battleship.shipPoints.port.ShipPointsGateway;
 import com.ara.game.usecases.battleship.shipclass.ShipClassFacade;
 import com.google.inject.Inject;
 
+import io.vavr.collection.List;
+import io.vavr.collection.Seq;
 import io.vavr.control.Option;
 
 public class ShipInMemoryGateway implements ShipGateway {
@@ -47,6 +49,18 @@ public class ShipInMemoryGateway implements ShipGateway {
                 .map(s -> mapper.mapToOutputData(ship.get(), s))
                 .toOption();
 
+    }
+    @Override
+    public Option<Seq<ShipWithPointsOutputData>> findAllById(Seq<String> ids) {
+        Seq<ShipWithPointsOutputData> ships = List.empty();
+        for (String id : ids) {
+            Option<ShipWithPointsOutputData> ship = findByIdWithPoints(id);
+            if (ship.isEmpty()) {
+                return Option.none();
+            }
+            ships = ships.append(ship.get());
+        }
+        return Option.of(ships);
     }
 
     @Override

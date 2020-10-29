@@ -10,9 +10,8 @@ import io.vavr.control.Option;
 public interface PlayerShipGateway {
     PlayerShipInputData save(PlayerShipInputData playerShip);
 
-    Option<Seq<ShipOutputData>> find(String playerId);
-    
-    Option<Seq<ShipWithPointsOutputData>> findWithPoints(String playerId);
+   
+    Option<Seq<ShipWithPointsOutputData>> find(String playerId);
 
     Option<ShipOutputData> findByPlayerIdAndShipClassShortName(String playerId, String shipClass);
 

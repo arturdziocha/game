@@ -56,7 +56,7 @@ final class PlayerShipCreator {
         if (isAlreadyPlaced(inputData.getPlayerId(), ship.get().getShipClass().getShortName()).isDefined()) {
             return Either.left(PlayerShipError.SHIP_IS_ALREADY_PLACED);
         }
-        Option<Seq<ShipWithPointsOutputData>> placedShips = playerShipGateway.findWithPoints(player.get().getId());
+        Option<Seq<ShipWithPointsOutputData>> placedShips = playerShipGateway.find(player.get().getId());
         if (placedShips.isDefined()) {
             if (isToCloseTo(placedShips.get(), ship.get().getPoints())) {
                 removeShip(inputData.getShipId());
@@ -73,7 +73,7 @@ final class PlayerShipCreator {
     }
 
     private boolean isAllShipsPlaced(String playerId) {
-        Option<Seq<ShipOutputData>> alreadyPlaced = playerShipGateway.find(playerId);
+        Option<Seq<ShipWithPointsOutputData>> alreadyPlaced = playerShipGateway.find(playerId);
         if (alreadyPlaced.isEmpty()) {
             return false;
         }

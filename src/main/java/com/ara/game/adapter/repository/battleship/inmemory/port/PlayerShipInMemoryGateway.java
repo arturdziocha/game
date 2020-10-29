@@ -4,28 +4,37 @@ import com.ara.game.usecases.battleship.playerShip.dto.PlayerShipInputData;
 import com.ara.game.usecases.battleship.playerShip.port.PlayerShipGateway;
 import com.ara.game.usecases.battleship.ship.dto.ShipOutputData;
 import com.ara.game.usecases.battleship.ship.dto.ShipWithPointsOutputData;
+import com.ara.game.usecases.battleship.ship.port.ShipGateway;
 
+import io.vavr.collection.HashMap;
+import io.vavr.collection.List;
+import io.vavr.collection.Map;
 import io.vavr.collection.Seq;
 import io.vavr.control.Option;
 
 public class PlayerShipInMemoryGateway implements PlayerShipGateway {
+    private Map<String, Seq<String>> entities;
+    private final ShipGateway shipGateway;
+
+    public PlayerShipInMemoryGateway(ShipGateway shipGateway) {
+        this.shipGateway = shipGateway;
+        this.entities = HashMap.empty();
+    }
 
     @Override
     public PlayerShipInputData save(PlayerShipInputData playerShip) {
-        // TODO Auto-generated method stub
-        return null;
+        if (entities.containsKey(playerShip.getPlayerId())) {
+            Seq<String> old = entities.get(playerShip.getPlayerId()).get();
+            entities = entities.replaceValue(playerShip.getPlayerId(), old.append(playerShip.getShipId()));
+        } else {
+            entities = entities.put(playerShip.getPlayerId(), List.of(playerShip.getShipId()));
+        }
+        return playerShip;
     }
 
     @Override
-    public Option<Seq<ShipOutputData>> find(String playerId) {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    @Override
-    public Option<Seq<ShipWithPointsOutputData>> findWithPoints(String playerId) {
-        // TODO Auto-generated method stub
-        return null;
+    public Option<Seq<ShipWithPointsOutputData>> find(String playerId) {
+        return entities.get(playerId).flatMap(s -> shipGateway.findAllById(s));
     }
 
     @Override

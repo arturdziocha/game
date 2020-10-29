@@ -40,7 +40,7 @@ public class ShipPointsInMemoryGateway implements ShipPointsGateway {
 
     @Override
     public void remove(String shipId) {
-        entities.remove(shipId);
+        entities = entities.remove(shipId);
 
     }
 
