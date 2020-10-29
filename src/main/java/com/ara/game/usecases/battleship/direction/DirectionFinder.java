@@ -25,7 +25,7 @@ final class DirectionFinder {
         return Stream
                 .of(Direction.values())
                 .find(direction -> direction.getName().equals(name))
-                .map(mapper::mapToOutputData)
+                .map(mapper::mapToDTO)
                 .toEither(DirectionError.CANNOT_FIND_DIRECTION);
     }
 
@@ -36,12 +36,12 @@ final class DirectionFinder {
         return Stream
                 .of(Direction.values())
                 .find(direction -> direction.getShortName().equals(shortName))
-                .map(mapper::mapToOutputData)
+                .map(mapper::mapToDTO)
                 .toEither(DirectionError.CANNOT_FIND_DIRECTION);
     }
 
     final Seq<DirectionOutputData> findAll() {
-        return Stream.of(Direction.values()).map(mapper::mapToOutputData);
+        return Stream.of(Direction.values()).map(mapper::mapToDTO);
     }
 
     final DirectionOutputData findRandom() {

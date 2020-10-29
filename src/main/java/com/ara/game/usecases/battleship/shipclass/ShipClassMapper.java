@@ -3,7 +3,7 @@ package com.ara.game.usecases.battleship.shipclass;
 import com.ara.game.usecases.battleship.shipclass.dto.ShipClassOutputData;
 
 final class ShipClassMapper {
-    ShipClassOutputData mapToOutputData(ShipClass shipClass) {
+    ShipClassOutputData mapToDTO(ShipClass shipClass) {
         return ShipClassOutputData
                 .builder()
                 .name(shipClass.getName())

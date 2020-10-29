@@ -9,7 +9,7 @@ final class ShipMapper {
         return CreateOutputData.builder().id(ship.getId()).build();
     }
 
-    final ShipOutputData mapToOutputData(Ship ship, ShipClassOutputData shipClass) {
+    final ShipOutputData mapToDTO(Ship ship, ShipClassOutputData shipClass) {
         return ShipOutputData
                 .builder()
                 .id(ship.getId())

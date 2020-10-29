@@ -23,7 +23,7 @@ final class ShipClassFinder {
         return Stream
                 .of(ShipClass.values())
                 .find(sC -> sC.getName().equals(name))
-                .map(mapper::mapToOutputData)
+                .map(mapper::mapToDTO)
                 .toEither(ShipClassError.SHIP_CLASS_NOT_FOUND);
     }
 
@@ -34,12 +34,12 @@ final class ShipClassFinder {
         return Stream
                 .of(ShipClass.values())
                 .find(sC -> sC.getShortName().equals(shortName))
-                .map(mapper::mapToOutputData)
+                .map(mapper::mapToDTO)
                 .toEither(ShipClassError.SHIP_CLASS_NOT_FOUND);
     }
 
     Seq<ShipClassOutputData> findAll() {
-        return Stream.of(ShipClass.values()).map(mapper::mapToOutputData);
+        return Stream.of(ShipClass.values()).map(mapper::mapToDTO);
     }
 
 }

@@ -23,7 +23,7 @@ class PlayerTypeFinder {
         return Stream
                 .of(PlayerType.values())
                 .find(pT -> pT.getId().equals(id))
-                .map(mapper::mapToOutputData)
+                .map(mapper::mapToDTO)
                 .toEither(PlayerTypeError.CANNOT_FIND_TYPE_OF_PLAYER);
     }
 
@@ -34,11 +34,11 @@ class PlayerTypeFinder {
         return Stream
                 .of(PlayerType.values())
                 .find(pT -> pT.getName().equals(name))
-                .map(mapper::mapToOutputData)
+                .map(mapper::mapToDTO)
                 .toEither(PlayerTypeError.CANNOT_FIND_TYPE_OF_PLAYER);
     }
 
     final Seq<PlayerTypeOutputData> findAll() {
-        return Stream.of(PlayerType.values()).map(mapper::mapToOutputData);
+        return Stream.of(PlayerType.values()).map(mapper::mapToDTO);
     }
 }

@@ -44,7 +44,7 @@ final class ShipCreator {
                 .health(shipClass.get().getSize())
                 .build();
         return Either
-                .right(mapper.mapToCreateOutputData(shipGateway.save(mapper.mapToOutputData(ship, shipClass.get()))));
+                .right(mapper.mapToCreateOutputData(shipGateway.save(mapper.mapToDTO(ship, shipClass.get()))));
 
     }
 }

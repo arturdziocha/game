@@ -22,7 +22,7 @@ final class PointStatusFinder {
         return Stream
                 .of(PointStatus.values())
                 .find(pS -> pS.getName().equals(name))
-                .map(mapper::mapToOutputData)
+                .map(mapper::mapToDTO)
                 .toEither(PointStatusError.CANNOT_FIND_POINT_STATUS);
     }
 
