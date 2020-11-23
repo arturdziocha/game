@@ -1,6 +1,6 @@
 package com.ara.game.usecases.battleship.direction;
 
-import com.ara.game.usecases.battleship.direction.dto.DirectionOutputData;
+import com.ara.game.usecases.battleship.direction.dto.DirectionDTO;
 import com.ara.game.usecases.common.Error;
 
 import io.vavr.collection.Seq;
@@ -14,19 +14,19 @@ public final class DirectionFacade {
         this.finder = new DirectionFinder(mapper);
     }
 
-    public final Either<Error, DirectionOutputData> findByName(String name) {
+    public final Either<Error, DirectionDTO> findByName(String name) {
         return finder.findByName(name);
     }
 
-    public final Either<Error, DirectionOutputData> findByShortName(String shortName) {
+    public final Either<Error, DirectionDTO> findByShortName(String shortName) {
         return finder.findByShortName(shortName);
     }
 
-    public final Seq<DirectionOutputData> findAll() {
+    public final Seq<DirectionDTO> findAll() {
         return finder.findAll();
     }
 
-    public final DirectionOutputData findRandom() {
+    public final DirectionDTO findRandom() {
         return finder.findRandom();
     }
 

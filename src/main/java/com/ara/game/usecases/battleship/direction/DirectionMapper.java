@@ -1,9 +1,9 @@
 package com.ara.game.usecases.battleship.direction;
 
-import com.ara.game.usecases.battleship.direction.dto.DirectionOutputData;
+import com.ara.game.usecases.battleship.direction.dto.DirectionDTO;
 
 final class DirectionMapper {
-    final DirectionOutputData mapToDTO(Direction direction) {
-        return DirectionOutputData.builder().name(direction.getName()).shortName(direction.getShortName()).build();
+    final DirectionDTO mapToDTO(Direction direction) {
+        return DirectionDTO.builder().name(direction.getName()).shortName(direction.getShortName()).build();
     }
 }

@@ -6,7 +6,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import com.ara.game.usecases.battleship.direction.dto.DirectionOutputData;
+import com.ara.game.usecases.battleship.direction.dto.DirectionDTO;
 import com.ara.game.usecases.common.Error;
 
 import io.vavr.collection.Seq;
@@ -24,7 +24,7 @@ class DirectionFacadeTest {
     @DisplayName("Given null value when find by shortName, should return Either.left")
     void test1() {
         // Given When
-        Either<Error, DirectionOutputData> direction = directionFacade.findByShortName(null);
+        Either<Error, DirectionDTO> direction = directionFacade.findByShortName(null);
         // Then
         assertThat(direction.getLeft().getCause()).isEqualTo("Value cannot be empty");
     }
@@ -33,7 +33,7 @@ class DirectionFacadeTest {
     @DisplayName("Given empty string when find by shortName, should return Either.left")
     void test2() {
         // Given When
-        Either<Error, DirectionOutputData> direction = directionFacade.findByShortName("");
+        Either<Error, DirectionDTO> direction = directionFacade.findByShortName("");
         // Then
         assertThat(direction.getLeft().getCause()).isEqualTo("Value cannot be empty");
     }
@@ -42,7 +42,7 @@ class DirectionFacadeTest {
     @DisplayName("When given wrong DirectionOutputData then return Either.left")
     void test3() {
         // Given When
-        Either<Error, DirectionOutputData> direction = directionFacade.findByShortName("w");
+        Either<Error, DirectionDTO> direction = directionFacade.findByShortName("w");
         // Then
         assertThat(direction.getLeft().getCause()).isEqualTo("Cannot find direction");
     }
@@ -51,7 +51,7 @@ class DirectionFacadeTest {
     @DisplayName("When given good DirectionOutputData short name then return Either.right")
     void test4() {
         // Given When
-        Either<Error, DirectionOutputData> direction = directionFacade.findByShortName("u");
+        Either<Error, DirectionDTO> direction = directionFacade.findByShortName("u");
         // Then
         assertThat(direction.get().getName()).isEqualTo("Up");
     }
@@ -60,7 +60,7 @@ class DirectionFacadeTest {
     @DisplayName("When given wrong DirectionOutputData name then return Either.right")
     void test5() {
         // Given When
-        Either<Error, DirectionOutputData> direction = directionFacade.findByName("WEST");
+        Either<Error, DirectionDTO> direction = directionFacade.findByName("WEST");
         // Then
         assertThat(direction.getLeft().getCause()).isEqualTo("Cannot find direction");
     }
@@ -69,7 +69,7 @@ class DirectionFacadeTest {
     @DisplayName("When given good DirectionOutputData name then return Either.right")
     void test6() {
         // Given When
-        Either<Error, DirectionOutputData> direction = directionFacade.findByName("Down");
+        Either<Error, DirectionDTO> direction = directionFacade.findByName("Down");
         // Then
         assertThat(direction.get().getName()).isEqualTo("Down");
     }
@@ -78,7 +78,7 @@ class DirectionFacadeTest {
     @DisplayName("Get all directions")
     void test7() {
         // Given When
-        Seq<DirectionOutputData> directions = directionFacade.findAll();
+        Seq<DirectionDTO> directions = directionFacade.findAll();
         // Then
         assertThat(directions.size()).isEqualByComparingTo(4);
     }

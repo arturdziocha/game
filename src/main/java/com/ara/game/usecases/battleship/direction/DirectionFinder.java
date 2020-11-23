@@ -4,7 +4,7 @@ import java.util.Random;
 
 import org.apache.commons.lang3.StringUtils;
 
-import com.ara.game.usecases.battleship.direction.dto.DirectionOutputData;
+import com.ara.game.usecases.battleship.direction.dto.DirectionDTO;
 import com.ara.game.usecases.common.Error;
 
 import io.vavr.collection.Seq;
@@ -18,7 +18,7 @@ final class DirectionFinder {
         this.mapper = mapper;
     }
 
-    final Either<Error, DirectionOutputData> findByName(String name) {
+    final Either<Error, DirectionDTO> findByName(String name) {
         if (StringUtils.isEmpty(name)) {
             return Either.left(DirectionError.VALUE_CANNOT_BE_EMPTY);
         }
@@ -29,7 +29,7 @@ final class DirectionFinder {
                 .toEither(DirectionError.CANNOT_FIND_DIRECTION);
     }
 
-    final Either<Error, DirectionOutputData> findByShortName(String shortName) {
+    final Either<Error, DirectionDTO> findByShortName(String shortName) {
         if (StringUtils.isEmpty(shortName)) {
             return Either.left(DirectionError.VALUE_CANNOT_BE_EMPTY);
         }
@@ -40,12 +40,12 @@ final class DirectionFinder {
                 .toEither(DirectionError.CANNOT_FIND_DIRECTION);
     }
 
-    final Seq<DirectionOutputData> findAll() {
+    final Seq<DirectionDTO> findAll() {
         return Stream.of(Direction.values()).map(mapper::mapToDTO);
     }
 
-    final DirectionOutputData findRandom() {
-        Seq<DirectionOutputData> all = findAll();
+    final DirectionDTO findRandom() {
+        Seq<DirectionDTO> all = findAll();
         return all.get(new Random().nextInt(all.size()));
     }
 

@@ -4,7 +4,7 @@ import lombok.Builder;
 import lombok.Getter;
 
 @Builder
-public final class DirectionOutputData {
+public final class DirectionDTO {
     @Getter
     private final String name;
     @Getter

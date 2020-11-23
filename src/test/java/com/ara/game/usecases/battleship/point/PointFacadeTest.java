@@ -12,7 +12,7 @@ import org.junit.jupiter.api.Test;
 
 import com.ara.game.external.ConsoleModule;
 import com.ara.game.usecases.battleship.direction.DirectionFacade;
-import com.ara.game.usecases.battleship.direction.dto.DirectionOutputData;
+import com.ara.game.usecases.battleship.direction.dto.DirectionDTO;
 import com.ara.game.usecases.battleship.point.dto.PointCreateRowColInputData;
 import com.ara.game.usecases.battleship.point.dto.PointCreateStringInputData;
 import com.ara.game.usecases.battleship.point.dto.PointOutputData;
@@ -155,7 +155,7 @@ class PointFacadeTest {
         DirectionFacade directionFacade = new DirectionFacade();
         // Given
         Either<Error, ShipClassOutputData> shipClass = shipClassFacade.findByName("Battleship");
-        Either<Error, DirectionOutputData> direction = directionFacade.findByShortName("d");
+        Either<Error, DirectionDTO> direction = directionFacade.findByShortName("d");
         Either<Error, CreateOutputData> point = pointFacade
                 .create(PointCreateStringInputData.builder().pointString("b2").build());
         Either<Error, PointOutputData> findPoint = pointFacade.findById(point.get().getId());
