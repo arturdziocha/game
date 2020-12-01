@@ -6,7 +6,7 @@ import lombok.ToString;
 
 @Builder
 @ToString
-public class PlayerTypeOutputData {
+public class PlayerTypeDTO {
     @Getter
     private final String id;
     @Getter

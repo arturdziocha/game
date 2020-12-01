@@ -1,6 +1,6 @@
 package com.ara.game.usecases.battleship.playerType;
 
-import com.ara.game.usecases.battleship.playerType.dto.PlayerTypeOutputData;
+import com.ara.game.usecases.battleship.playerType.dto.PlayerTypeDTO;
 import com.ara.game.usecases.common.Error;
 
 import io.vavr.collection.Seq;
@@ -14,15 +14,15 @@ public class PlayerTypeFacade {
         this.finder = new PlayerTypeFinder(mapper);
     }
 
-    public final Either<Error, PlayerTypeOutputData> findById(String id) {
+    public final Either<Error, PlayerTypeDTO> findById(String id) {
         return finder.findById(id);
     }
 
-    public final Either<Error, PlayerTypeOutputData> findByName(String name) {
+    public final Either<Error, PlayerTypeDTO> findByName(String name) {
         return finder.findByName(name);
     }
 
-    public final Seq<PlayerTypeOutputData> findAll() {
+    public final Seq<PlayerTypeDTO> findAll() {
         return finder.findAll();
     }
 }

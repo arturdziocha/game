@@ -1,8 +1,8 @@
 package com.ara.game.usecases.battleship.playerShip;
 
-import com.ara.game.usecases.battleship.player.dtos.PlayerOutputData;
+import com.ara.game.usecases.battleship.player.dto.PlayerDTO;
 import com.ara.game.usecases.battleship.player.port.PlayerGateway;
-import com.ara.game.usecases.battleship.playerShip.dto.PlayerShipInputData;
+import com.ara.game.usecases.battleship.playerShip.dto.PlayerShipCreateDTO;
 import com.ara.game.usecases.battleship.playerShip.port.PlayerShipGateway;
 import com.ara.game.usecases.battleship.point.dto.PointOutputData;
 import com.ara.game.usecases.battleship.ship.dto.ShipOutputData;
@@ -34,7 +34,7 @@ final class PlayerShipCreator {
         this.mapper = new PlayerShipMapper();
     }
 
-    final Either<Error, ShipWithPointsOutputData> placeShip(PlayerShipInputData inputData) {
+    final Either<Error, ShipWithPointsOutputData> placeShip(PlayerShipCreateDTO inputData) {
         Option<Error> validated = validator.validate(inputData);
         if (validated.isDefined()) {
             return Either.left(validated.get());
@@ -43,7 +43,7 @@ final class PlayerShipCreator {
             removeShip(inputData.getShipId());
             return Either.left(PlayerShipError.ALL_SHIP_PLACED);
         }
-        Option<PlayerOutputData> player = playerGateway.findById(inputData.getPlayerId());
+        Option<PlayerDTO> player = playerGateway.findById(inputData.getPlayerId());
         if (player.isEmpty()) {
             removeShip(inputData.getShipId());
             return Either.left(PlayerShipError.CANNOT_FIND_RELATED_PLAYER);

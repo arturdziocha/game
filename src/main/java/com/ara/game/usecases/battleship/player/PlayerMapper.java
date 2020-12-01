@@ -1,11 +1,11 @@
 package com.ara.game.usecases.battleship.player;
 
-import com.ara.game.usecases.battleship.player.dtos.PlayerOutputData;
+import com.ara.game.usecases.battleship.player.dto.PlayerDTO;
 import com.ara.game.usecases.common.CreateOutputData;
 
 final class PlayerMapper {
-    final PlayerOutputData mapToPlayerDTO(Player player) {
-        return PlayerOutputData
+    final PlayerDTO mapToPlayerDTO(Player player) {
+        return PlayerDTO
                 .builder()
                 .id(player.getId())
                 .name(player.getName())
@@ -13,7 +13,7 @@ final class PlayerMapper {
                 .build();
     }
 
-    final CreateOutputData mapToCreateOutput(PlayerOutputData dto) {
+    final CreateOutputData mapToCreateOutput(PlayerDTO dto) {
         return CreateOutputData.builder().id(dto.getId()).build();
     }
 }

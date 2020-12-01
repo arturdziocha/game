@@ -1,6 +1,6 @@
 package com.ara.game.adapter.repository.battleship.inmemory.port;
 
-import com.ara.game.usecases.battleship.playerShip.dto.PlayerShipInputData;
+import com.ara.game.usecases.battleship.playerShip.dto.PlayerShipCreateDTO;
 import com.ara.game.usecases.battleship.playerShip.port.PlayerShipGateway;
 import com.ara.game.usecases.battleship.ship.dto.ShipOutputData;
 import com.ara.game.usecases.battleship.ship.dto.ShipWithPointsOutputData;
@@ -22,7 +22,7 @@ public class PlayerShipInMemoryGateway implements PlayerShipGateway {
     }
 
     @Override
-    public PlayerShipInputData save(PlayerShipInputData playerShip) {
+    public PlayerShipCreateDTO save(PlayerShipCreateDTO playerShip) {
         if (entities.containsKey(playerShip.getPlayerId())) {
             Seq<String> old = entities.get(playerShip.getPlayerId()).get();
             entities = entities.replaceValue(playerShip.getPlayerId(), old.append(playerShip.getShipId()));

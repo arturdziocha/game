@@ -1,12 +1,10 @@
-package com.ara.game.usecases.battleship.player.dtos;
+package com.ara.game.usecases.battleship.player.dto;
 
 import lombok.Builder;
 import lombok.Getter;
 
 @Builder
-public final class PlayerOutputData {
-    @Getter
-    private final String id;
+public final class PlayerCreateDTO {
     @Getter
     private final String name;
     @Getter

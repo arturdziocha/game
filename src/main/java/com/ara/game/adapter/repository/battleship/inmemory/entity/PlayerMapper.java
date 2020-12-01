@@ -1,9 +1,9 @@
 package com.ara.game.adapter.repository.battleship.inmemory.entity;
 
-import com.ara.game.usecases.battleship.player.dtos.PlayerOutputData;
+import com.ara.game.usecases.battleship.player.dto.PlayerDTO;
 
 public class PlayerMapper {
-    public PlayerInMemory mapToEntity(PlayerOutputData player) {
+    public PlayerInMemory mapToEntity(PlayerDTO player) {
         return PlayerInMemory
                 .builder()
                 .id(player.getId())
@@ -12,8 +12,8 @@ public class PlayerMapper {
                 .build();
     }
 
-    public PlayerOutputData mapToOutputData(PlayerInMemory player) {
-        return PlayerOutputData
+    public PlayerDTO mapToOutputData(PlayerInMemory player) {
+        return PlayerDTO
                 .builder()
                 .id(player.getId())
                 .name(player.getName())

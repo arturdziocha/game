@@ -5,7 +5,8 @@ import com.ara.game.usecases.common.Error;
 enum GameError implements Error {
     DATA_CANNOT_BE_NULL("Data cannot be null"),
     BOARD_SIZE_CANNOT_BE_NULL("Board size cannot be null"),
-    TO_SMALL_BOARD_SIZE("To small board size");
+    TO_SMALL_BOARD_SIZE("To small board size"),
+    CANNOT_FIND_GAME("Cannot find game");
 
     private final String cause;
 

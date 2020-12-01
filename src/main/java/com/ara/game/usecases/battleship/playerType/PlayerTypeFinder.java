@@ -2,7 +2,7 @@ package com.ara.game.usecases.battleship.playerType;
 
 import org.apache.commons.lang3.StringUtils;
 
-import com.ara.game.usecases.battleship.playerType.dto.PlayerTypeOutputData;
+import com.ara.game.usecases.battleship.playerType.dto.PlayerTypeDTO;
 import com.ara.game.usecases.common.Error;
 
 import io.vavr.collection.Seq;
@@ -16,7 +16,7 @@ class PlayerTypeFinder {
         this.mapper = mapper;
     }
 
-    final Either<Error, PlayerTypeOutputData> findById(String id) {
+    final Either<Error, PlayerTypeDTO> findById(String id) {
         if (StringUtils.isEmpty(id)) {
             return Either.left(PlayerTypeError.DATA_CANNOT_BE_EMPTY);
         }
@@ -27,7 +27,7 @@ class PlayerTypeFinder {
                 .toEither(PlayerTypeError.CANNOT_FIND_TYPE_OF_PLAYER);
     }
 
-    final Either<Error, PlayerTypeOutputData> findByName(String name) {
+    final Either<Error, PlayerTypeDTO> findByName(String name) {
         if (StringUtils.isEmpty(name)) {
             return Either.left(PlayerTypeError.DATA_CANNOT_BE_EMPTY);
         }
@@ -38,7 +38,7 @@ class PlayerTypeFinder {
                 .toEither(PlayerTypeError.CANNOT_FIND_TYPE_OF_PLAYER);
     }
 
-    final Seq<PlayerTypeOutputData> findAll() {
+    final Seq<PlayerTypeDTO> findAll() {
         return Stream.of(PlayerType.values()).map(mapper::mapToDTO);
     }
 }

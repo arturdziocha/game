@@ -6,7 +6,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import com.ara.game.usecases.battleship.playerType.dto.PlayerTypeOutputData;
+import com.ara.game.usecases.battleship.playerType.dto.PlayerTypeDTO;
 import com.ara.game.usecases.common.Error;
 
 import io.vavr.control.Either;
@@ -21,7 +21,7 @@ class PlayerTypeFacadeTest {
     @DisplayName("Should return Either left when id is null")
     void test1() {
         // Given when
-        Either<Error, PlayerTypeOutputData> pointStatus = playerTypeFacade.findById(null);
+        Either<Error, PlayerTypeDTO> pointStatus = playerTypeFacade.findById(null);
         // Then
         assertThat(pointStatus.getLeft().getCause()).isEqualTo("Data cannot be empty");
     }
@@ -29,7 +29,7 @@ class PlayerTypeFacadeTest {
     @DisplayName("Should return Either left when id is empty")
     void test2() {
         // Given when
-        Either<Error, PlayerTypeOutputData> pointStatus = playerTypeFacade.findById("");
+        Either<Error, PlayerTypeDTO> pointStatus = playerTypeFacade.findById("");
         // Then
         assertThat(pointStatus.getLeft().getCause()).isEqualTo("Data cannot be empty");
     }
@@ -37,7 +37,7 @@ class PlayerTypeFacadeTest {
     @DisplayName("Should return Either left when player id don't exists")
     void test3() {
         // Given when
-        Either<Error, PlayerTypeOutputData> pointStatus = playerTypeFacade.findById("3");
+        Either<Error, PlayerTypeDTO> pointStatus = playerTypeFacade.findById("3");
         // Then
         assertThat(pointStatus.getLeft().getCause()).isEqualTo("Cannot find player type");
     }
@@ -45,7 +45,7 @@ class PlayerTypeFacadeTest {
     @DisplayName("Should find player type with id")
     void test4() {
         // Given when
-        Either<Error, PlayerTypeOutputData> pointStatus = playerTypeFacade.findById("1");
+        Either<Error, PlayerTypeDTO> pointStatus = playerTypeFacade.findById("1");
         // Then
         assertThat(pointStatus.get().getName()).isEqualTo("Human Player");
     }

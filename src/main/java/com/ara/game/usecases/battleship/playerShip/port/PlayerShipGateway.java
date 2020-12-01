@@ -1,6 +1,6 @@
 package com.ara.game.usecases.battleship.playerShip.port;
 
-import com.ara.game.usecases.battleship.playerShip.dto.PlayerShipInputData;
+import com.ara.game.usecases.battleship.playerShip.dto.PlayerShipCreateDTO;
 import com.ara.game.usecases.battleship.ship.dto.ShipOutputData;
 import com.ara.game.usecases.battleship.ship.dto.ShipWithPointsOutputData;
 
@@ -8,7 +8,7 @@ import io.vavr.collection.Seq;
 import io.vavr.control.Option;
 
 public interface PlayerShipGateway {
-    PlayerShipInputData save(PlayerShipInputData playerShip);
+    PlayerShipCreateDTO save(PlayerShipCreateDTO playerShip);
 
    
     Option<Seq<ShipWithPointsOutputData>> find(String playerId);

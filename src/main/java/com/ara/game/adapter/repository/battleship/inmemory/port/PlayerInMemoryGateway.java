@@ -3,8 +3,8 @@ package com.ara.game.adapter.repository.battleship.inmemory.port;
 
 import com.ara.game.adapter.repository.battleship.inmemory.entity.PlayerInMemory;
 import com.ara.game.adapter.repository.battleship.inmemory.entity.PlayerMapper;
-import com.ara.game.usecases.battleship.player.dtos.PlayerOutputAllData;
-import com.ara.game.usecases.battleship.player.dtos.PlayerOutputData;
+import com.ara.game.usecases.battleship.player.dto.PlayerAllDataDTO;
+import com.ara.game.usecases.battleship.player.dto.PlayerDTO;
 import com.ara.game.usecases.battleship.player.port.PlayerGateway;
 
 import io.vavr.collection.HashMap;
@@ -21,18 +21,18 @@ public class PlayerInMemoryGateway implements PlayerGateway {
     }
 
     @Override
-    public PlayerOutputData save(PlayerOutputData inputData) {
+    public PlayerDTO save(PlayerDTO inputData) {
         entities = entities.put(inputData.getId(), mapper.mapToEntity(inputData));
         return inputData;
     }
 
     @Override
-    public Option<PlayerOutputData> findById(String id) {
+    public Option<PlayerDTO> findById(String id) {
         return entities.get(id).map(mapper::mapToOutputData);
     }
 
     @Override
-    public Option<PlayerOutputAllData> findAllData(String id) {
+    public Option<PlayerAllDataDTO> findAllData(String id) {
         // TODO Auto-generated method stub
         return null;
     }

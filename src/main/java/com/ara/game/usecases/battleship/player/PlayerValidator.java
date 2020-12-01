@@ -2,13 +2,13 @@ package com.ara.game.usecases.battleship.player;
 
 import org.apache.commons.lang3.StringUtils;
 
-import com.ara.game.usecases.battleship.player.dtos.PlayerCreateInputData;
+import com.ara.game.usecases.battleship.player.dto.PlayerCreateDTO;
 import com.ara.game.usecases.common.Error;
 
 import io.vavr.control.Option;
 
 final class PlayerValidator {
-    final Option<Error> validate(PlayerCreateInputData inputData) {
+    final Option<Error> validate(PlayerCreateDTO inputData) {
         if (inputData == null) {
             return Option.some(PlayerError.DATA_CANNOT_BE_EMPTY);
         }

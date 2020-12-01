@@ -1,10 +1,10 @@
 package com.ara.game.usecases.battleship.player;
 
-import com.ara.game.usecases.battleship.player.dtos.PlayerCreateInputData;
-import com.ara.game.usecases.battleship.player.dtos.PlayerOutputData;
+import com.ara.game.usecases.battleship.player.dto.PlayerCreateDTO;
+import com.ara.game.usecases.battleship.player.dto.PlayerDTO;
 import com.ara.game.usecases.battleship.player.port.PlayerGateway;
 import com.ara.game.usecases.battleship.playerType.PlayerTypeFacade;
-import com.ara.game.usecases.battleship.playerType.dto.PlayerTypeOutputData;
+import com.ara.game.usecases.battleship.playerType.dto.PlayerTypeDTO;
 import com.ara.game.usecases.common.CreateOutputData;
 import com.ara.game.usecases.common.Error;
 import com.ara.game.usecases.common.port.IdGenerator;
@@ -27,12 +27,12 @@ final class PlayerCreator {
         this.mapper = new PlayerMapper();
     }
 
-    final Either<Error, CreateOutputData> create(PlayerCreateInputData inputData) {        
+    final Either<Error, CreateOutputData> create(PlayerCreateDTO inputData) {        
         Option<Error> validated = validator.validate(inputData);
         if (validated.isDefined()) {
             return Either.left(validated.get());
         }
-        Either<Error, PlayerTypeOutputData> playerType = playerTypeFacade.findById(inputData.getPlayerTypeId());
+        Either<Error, PlayerTypeDTO> playerType = playerTypeFacade.findById(inputData.getPlayerTypeId());
         if (playerType.isRight()) {
             Player player = Player
                     .builder()
@@ -40,7 +40,7 @@ final class PlayerCreator {
                     .name(inputData.getName())
                     .playerTypeId(inputData.getPlayerTypeId())
                     .build();
-            PlayerOutputData dto = playerGateway.save(mapper.mapToPlayerDTO(player));
+            PlayerDTO dto = playerGateway.save(mapper.mapToPlayerDTO(player));
             return Either.right(mapper.mapToCreateOutput(dto));
         } else {
             return Either.left(playerType.getLeft());

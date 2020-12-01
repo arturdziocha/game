@@ -4,7 +4,7 @@ import lombok.Builder;
 import lombok.Getter;
 
 @Builder
-public final class PlayerShipInputData {
+public final class PlayerShipCreateDTO {
     @Getter
     private final String playerId;
     @Getter

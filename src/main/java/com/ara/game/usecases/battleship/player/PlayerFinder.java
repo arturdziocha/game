@@ -2,7 +2,7 @@ package com.ara.game.usecases.battleship.player;
 
 import org.apache.commons.lang3.StringUtils;
 
-import com.ara.game.usecases.battleship.player.dtos.PlayerOutputData;
+import com.ara.game.usecases.battleship.player.dto.PlayerDTO;
 import com.ara.game.usecases.battleship.player.port.PlayerGateway;
 import com.ara.game.usecases.common.Error;
 
@@ -13,7 +13,7 @@ final class PlayerFinder {
     PlayerFinder(final PlayerGateway playerGateway) {
         this.playerGateway = playerGateway;
     }
-    final Either<Error, PlayerOutputData> find(String id) {
+    final Either<Error, PlayerDTO> find(String id) {
         if (StringUtils.isEmpty(id)) {
             return Either.left(PlayerError.DATA_CANNOT_BE_EMPTY);
         }

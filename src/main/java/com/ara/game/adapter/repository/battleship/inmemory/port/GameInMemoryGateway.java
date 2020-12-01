@@ -6,6 +6,7 @@ import com.ara.game.usecases.battleship.game.dto.GameDTO;
 import com.ara.game.usecases.battleship.game.port.GameGateway;
 import io.vavr.collection.HashMap;
 import io.vavr.collection.Map;
+import io.vavr.control.Option;
 
 public class GameInMemoryGateway implements GameGateway {
     private Map<String, GameInMemory> entities;
@@ -20,5 +21,11 @@ public class GameInMemoryGateway implements GameGateway {
     public GameDTO create(GameDTO inputData) {
         entities = entities.put(inputData.getId(), mapper.mapToEntity(inputData));
         return inputData;
+    }
+
+    @Override
+    public Option<GameDTO> find(String id) {
+        // TODO Auto-generated method stub
+        return null;
     }
 }

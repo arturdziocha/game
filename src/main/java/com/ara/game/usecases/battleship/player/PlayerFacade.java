@@ -1,7 +1,7 @@
 package com.ara.game.usecases.battleship.player;
 
-import com.ara.game.usecases.battleship.player.dtos.PlayerCreateInputData;
-import com.ara.game.usecases.battleship.player.dtos.PlayerOutputData;
+import com.ara.game.usecases.battleship.player.dto.PlayerCreateDTO;
+import com.ara.game.usecases.battleship.player.dto.PlayerDTO;
 import com.ara.game.usecases.battleship.player.port.PlayerGateway;
 import com.ara.game.usecases.common.CreateOutputData;
 import com.ara.game.usecases.common.Error;
@@ -20,11 +20,11 @@ public final class PlayerFacade {
         this.finder = new PlayerFinder(playerGateway);
     }
 
-    public final Either<Error, CreateOutputData> create(PlayerCreateInputData inputData) {
+    public final Either<Error, CreateOutputData> create(PlayerCreateDTO inputData) {
         return creator.create(inputData);
     }
 
-    public Either<Error, PlayerOutputData> find(String id) {
+    public Either<Error, PlayerDTO> find(String id) {
         return finder.find(id);
     }
 }
