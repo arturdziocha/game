@@ -8,5 +8,7 @@ public final class GameDTO {
     @Getter
     private final String id;
     @Getter
+    private final String playerId;
+    @Getter
     private final Short boardSize;
 }

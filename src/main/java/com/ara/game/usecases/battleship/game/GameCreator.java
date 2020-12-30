@@ -26,7 +26,7 @@ final class GameCreator {
         if (validated.isDefined()) {
             return Either.left(validated.get());
         }
-        Game game = Game.builder().id(idGenerator.generate()).boardSize(inputData.getBoardSize()).build();
+        Game game = Game.builder().playerId(inputData.getPlayerId()).id(idGenerator.generate()).boardSize(inputData.getBoardSize()).build();
         return Either.right(gameGateway.create(mapper.mapToDTO(game)));
 
     }

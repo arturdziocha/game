@@ -8,5 +8,8 @@ import lombok.NonNull;
 public final class GameCreateDTO {
     @Getter
     @NonNull
+    private final String playerId;
+    @Getter
+    @NonNull
     private final Short boardSize;
 }

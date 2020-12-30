@@ -11,5 +11,8 @@ final class Game {
     private final String id;
     @Getter
     @NonNull
+    private final String playerId;
+    @Getter
+    @NonNull
     private final Short boardSize;
 }

@@ -15,7 +15,7 @@ final class PlayerValidator {
         if (StringUtils.isEmpty(inputData.getName())) {
             return Option.some(PlayerError.PLAYER_NAME_CANNOT_BE_EMPTY);
         }
-        if (StringUtils.isEmpty(inputData.getPlayerTypeId())) {
+        if (StringUtils.isEmpty(inputData.getPlayerType().getId())) {
             return Option.some(PlayerError.PLAYER_TYPE_CANNOT_BE_EMPTY);
         }
         return Option.none();

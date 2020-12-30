@@ -32,13 +32,13 @@ final class PlayerCreator {
         if (validated.isDefined()) {
             return Either.left(validated.get());
         }
-        Either<Error, PlayerTypeDTO> playerType = playerTypeFacade.findById(inputData.getPlayerTypeId());
+        Either<Error, PlayerTypeDTO> playerType = playerTypeFacade.findById(inputData.getPlayerType().getId());
         if (playerType.isRight()) {
             Player player = Player
                     .builder()
                     .id(idGenerator.generate())
                     .name(inputData.getName())
-                    .playerTypeId(inputData.getPlayerTypeId())
+                    .playerTypeId(inputData.getPlayerType().getId())
                     .build();
             PlayerDTO dto = playerGateway.save(mapper.mapToPlayerDTO(player));
             return Either.right(mapper.mapToCreateOutput(dto));
