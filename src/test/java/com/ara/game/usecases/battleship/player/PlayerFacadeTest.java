@@ -42,9 +42,10 @@ class PlayerFacadeTest {
 
     @Test
     @DisplayName("Should return Either.left when player name is null")
-    void test1() {
+    void test1() {        
         // Given
-        PlayerCreateDTO input = PlayerCreateDTO.builder().name(null).playerTypeId("1").build();
+        Either<Error, PlayerTypeDTO> playerType = playerTypeFacade.findById("1");
+        PlayerCreateDTO input = PlayerCreateDTO.builder().name(null).playerType(playerType.get()).build();
         // When
         Either<Error, CreateOutputData> player = playerFacade.create(input);
         // Then
@@ -55,7 +56,8 @@ class PlayerFacadeTest {
     @DisplayName("Should return Either.left when player name is empty")
     void test2() {
         // Given
-        PlayerCreateDTO input = PlayerCreateDTO.builder().name("").playerTypeId("1").build();
+        Either<Error, PlayerTypeDTO> playerType = playerTypeFacade.findById("1");
+        PlayerCreateDTO input = PlayerCreateDTO.builder().name("").playerType(playerType.get()).build();
         // When
         Either<Error, CreateOutputData> player = playerFacade.create(input);
         // Then
@@ -67,7 +69,7 @@ class PlayerFacadeTest {
     @DisplayName("Should return Either.left when player type is null")
     void test3() {
         // Given
-        PlayerCreateDTO input = PlayerCreateDTO.builder().name("Artur").playerTypeId(null).build();
+        PlayerCreateDTO input = PlayerCreateDTO.builder().name("Artur").playerType(null).build();
         // When
         Either<Error, CreateOutputData> player = playerFacade.create(input);
         // Then
@@ -78,7 +80,7 @@ class PlayerFacadeTest {
     @DisplayName("Should return Either.left when player type is empty string")
     void test4() {
         // Given
-        PlayerCreateDTO input = PlayerCreateDTO.builder().name("Artur").playerTypeId("").build();
+        PlayerCreateDTO input = PlayerCreateDTO.builder().name("Artur").playerType("").build();
         // When
         Either<Error, CreateOutputData> player = playerFacade.create(input);
         // Then
